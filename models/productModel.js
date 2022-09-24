@@ -21,10 +21,16 @@ const productSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    images: {
-        type: Object,
-        required: true,
-    },
+    images: [{
+        public_id:{
+            type: String,
+            required: true,
+        },
+        url:{
+            type: String,
+            required: true
+        }
+    }],
     category: {
         type: String,
         required: true,

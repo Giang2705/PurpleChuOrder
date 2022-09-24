@@ -38,3 +38,12 @@ button {
 
 /* Header */
 @import url("./components//styles/header.css");
+
+/* Products List */
+@import url("./pages/styles/ProductsList.css");
+
+/* Product Detail */
+@import url("./pages/styles/ProductDetail.css");
+
+/* Login page */
+@import url("./pages/styles/Login.css");

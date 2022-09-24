@@ -8,12 +8,14 @@ import AboutUs from './about/AboutUs'
 import Contact from './contact/Contact'
 import Cart from './cart/Cart'
 import NotFounded from '../utils/NotFounded/NotFounded'
+import ProductDetail from './products/ProductDetail'
 
 const Homepage = () => {
   return (
     <Routes>
       <Route path="/" exact element={<Landing />}/>
       <Route path="/products" exact element={<ProductsListPage />}/>
+      <Route path="/detail/:id" exact element={<ProductDetail />}/>
       <Route path="/login" exact element={<Login />}/>
       <Route path="/register" exact element={<Register />}/>
       <Route path="/cart" exact element={<Cart />}/>
