@@ -5,6 +5,7 @@
     flex-wrap: wrap;
     padding: 50px;
     font-size: 150%;
+    margin-top: 70px;
 }
 .detail img{
     max-width: 400px;
@@ -24,18 +25,28 @@
 }
 .box-detail h2{
     text-transform: uppercase;
-    color: darkblue;
+    color: #9B00FF;
     letter-spacing: 2px;
     font-weight: 2rem;
+    margin: 10px 0;
+}
+.box-detail span {
+    font-weight: 800;
+    font-size: 2rem;
 }
 .box-detail p {
     line-height: 1.5;
     margin: 10px 0;
     opacity: 0.8;
+    text-align: justify;
+}
+.box-detail .sold {
+    font-weight: bold;
+    font-style: oblique;
 }
 .box-detail .cart {
-    background: #333;
-    color: white;
+    background: #FFD0EC;
+    color: rgb(133, 82, 145);
     margin-top: 10px;
     padding: 10px 25px;
     display: inline-block;
@@ -44,4 +55,6 @@
 }
 .related-products .title{
     margin: 0 50px;
+    font-size: 2rem;
+    font-style: italic;
 }

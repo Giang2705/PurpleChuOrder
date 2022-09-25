@@ -9,6 +9,7 @@ import Contact from './contact/Contact'
 import Cart from './cart/Cart'
 import NotFounded from '../utils/NotFounded/NotFounded'
 import ProductDetail from './products/ProductDetail'
+import Category from './category/Category'
 
 const Homepage = () => {
   return (
@@ -21,6 +22,9 @@ const Homepage = () => {
       <Route path="/cart" exact element={<Cart />}/>
       <Route path="/about" exact element={<AboutUs />}/>
       <Route path="/contact" exact element={<Contact />}/>
+
+      <Route path="/category" exact element={<Category />}/>
+
       <Route path="*" exact element={<NotFounded />}/>
     </Routes>
   )

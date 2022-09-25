@@ -1,0 +1,21 @@
+footer {
+    padding: 0 40px;
+    min-height: 70px;
+    width: 100%;
+    overflow: hidden;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+    background-color: #FFF5FF;
+}
+footer img {
+    width: 400px;
+}
+footer .listInformation ul li{
+    margin: 10px auto;
+}
+footer .listInformation img {
+    width: 20px;
+    margin-right: 10px;
+}

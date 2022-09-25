@@ -47,3 +47,9 @@ button {
 
 /* Login page */
 @import url("./pages/styles/Login.css");
+
+/* Category */
+@import url("./pages/styles/Category.css");
+
+/* Footer */
+@import url("./components//styles/footer.css");

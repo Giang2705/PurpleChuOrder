@@ -35,7 +35,7 @@ const ProductDetail = () => {
           </div>
           <span>${detailProduct.price}</span>
           <p>{detailProduct.description}</p>
-          <p>Sold: {detailProduct.sold}</p>
+          <p className="sold">Sold: {detailProduct.sold}</p>
           <Link to="/cart" className="cart">
             Thêm vào giỏ
           </Link>

@@ -39,17 +39,17 @@
     width: 50%;
     text-align: center;
     text-transform: uppercase;
-    color: white;
+    color: rgb(133, 82, 145);
     font-size: 17px;
     font-weight: 600;
     letter-spacing: 2px;
     padding: 6px;
 }
 #btn_buy{
-    background: #555;
+    background: #FFD0EC;
     margin-right: 5px;
 }
 #btn_view{
-    background: teal;
+    background: #C8DEFF;
     margin-left: 5px;
 }
