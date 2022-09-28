@@ -27,6 +27,9 @@ const CreateProduct = () => {
   const [images, setImages] = useState([]);
   const [imagesAfterDelete, setImagesAfterDelete] = useState([]);
 
+  const [onEdit, setOnEdit] = useState(false)
+  const [callback, setCallback] = state.productAPI.callback
+
   const [token] = state.token;
 
   const [isAdmin] = state.userAPI.isAdmin;
@@ -119,16 +122,28 @@ const CreateProduct = () => {
       if (!isAdmin) return alert("You are not an Admin");
       if (!images) return alert("No images upload");
 
-      await axios.post(
-        "/api/products",
-        { ...product, images },
-        {
-          headers: { Authorization: token },
-        }
-      );
+      if(onEdit){
+        await axios.put(
+          `/api/products/${product._id}`,
+          { ...product, images },
+          {
+            headers: { Authorization: token },
+          }
+        )
+      } else {
+        await axios.post(
+          "/api/products",
+          { ...product, images },
+          {
+            headers: { Authorization: token },
+          }
+        );
+      }
+      
 
       alert("Created a new product!");
 
+      setCallback(!callback)
       setImages([]);
       setProduct(initialState);
     } catch (err) {

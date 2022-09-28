@@ -45,6 +45,9 @@ button {
 /* Product Detail */
 @import url("./pages/styles/ProductDetail.css");
 
+/* Images Slider */
+@import url("./utils/styles/ImageSlider.css");
+
 /* Login page */
 @import url("./pages/styles/Login.css");
 
