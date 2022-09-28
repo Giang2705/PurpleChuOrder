@@ -10,6 +10,7 @@ import Cart from './cart/Cart'
 import NotFounded from '../utils/NotFounded/NotFounded'
 import ProductDetail from './products/ProductDetail'
 import Category from './category/Category'
+import CreateProduct from './products/CreateProduct'
 
 const Homepage = () => {
   return (
@@ -24,6 +25,8 @@ const Homepage = () => {
       <Route path="/contact" exact element={<Contact />}/>
 
       <Route path="/category" exact element={<Category />}/>
+      <Route path="/create-product" exact element={<CreateProduct />}/>
+
 
       <Route path="*" exact element={<NotFounded />}/>
     </Routes>

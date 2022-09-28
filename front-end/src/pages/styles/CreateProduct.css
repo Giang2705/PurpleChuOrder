@@ -1,0 +1,95 @@
+.create_product{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-around;
+}
+.upload{
+    max-width: 450px;
+    height: 500px;
+    width: 100%;
+    padding: 15px;
+    margin: 20px;
+    position: relative;
+}
+#file_up{
+    position: relative;
+    width: 100%;
+    height: 100%;
+    outline: none;
+}
+#file_up::before{
+    content: "Upload images";
+    text-align: center;
+    position: absolute;
+    width: 99%;
+    height: 25%;
+    padding-top: 50px;
+    top: 0;
+    left: 0;
+    background: #ffffff;
+    color:#FFD0EC;
+    font-size: 3.5rem;
+    cursor: pointer;
+    margin: auto;
+    border: 2px solid #ddd;
+}
+#file_img{
+    border: 2px solid #ddd;
+    width: 100%;
+    height: 50%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-around;
+    position: absolute;
+    bottom: 0%;
+}
+#file_img #imgGroup {
+    display: block;
+    position: relative;
+}
+
+#file_img img{
+    width: 100px;
+    height: 100px;
+    display: block;
+    object-fit: cover;
+}
+#file_img span{
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 50%;
+    padding: 6px 10px;
+    cursor: pointer;
+    font-weight: 900;
+    color: red;
+}
+.create_product form {
+    max-width: 500px;
+    min-width: 290px;
+    width: 100%;
+    margin: 15px 30px;
+}
+.create_product form .row{
+    width: 100%;
+    margin: 15px 0;
+}
+.create_product form input, textarea{
+    width: 100%;
+    min-height: 40px;
+    padding: 0 5px;
+}
+.create_product form button {
+    width: 200px;
+    height: 40px;
+    background: #555;
+    color: #FFFFFF;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 700;
+}

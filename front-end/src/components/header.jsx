@@ -35,7 +35,7 @@ const Header = () => {
         <li><Link to="/">Trang chủ</Link></li>
         <li><Link to="/products">Sản phẩm</Link></li>
         <li>{isAdmin ? <Link to='/category'>Thêm mặt hàng</Link> : <Link to='/about'>Giới thiệu</Link>}</li>
-        <li>{isAdmin ? <Link to='/'>Thêm sản phẩm</Link> : <Link to='/contact'>Liên hệ</Link>}</li>
+        <li>{isAdmin ? <Link to='/create-product'>Thêm sản phẩm</Link> : <Link to='/contact'>Liên hệ</Link>}</li>
         <li>{isAdmin ? <Link to='/'>Đơn đặt hàng</Link> : isLogged ? <Link to='/history'>Lịch sử đặt hàng</Link> : null}</li>
         <li>{isAdmin ? <Link to='/'>Yêu cầu</Link> : null}</li>
 
