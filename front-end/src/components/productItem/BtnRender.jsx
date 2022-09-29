@@ -7,11 +7,12 @@ const BtnRender = ({product}) => {
   const state = useContext(GlobalState)
 
   const [isAdmin] = state.userAPI.isAdmin
+  const addCart = state.userAPI.addCart
 
   return (
     <div className="row_btn">
       {
-        isAdmin ? null : <Link id="btn_buy" to="#!">
+        isAdmin ? null : <Link id="btn_buy" to="#!" onClick={() => addCart(product)}>
         Thêm <br /> giỏ hàng
       </Link>
       }

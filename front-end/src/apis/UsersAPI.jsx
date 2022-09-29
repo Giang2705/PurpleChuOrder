@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react'
 const UsersAPI = (token) => {
     const [isLogged, setIsLogged] = useState(false)
     const [isAdmin, setIsAdmin] = useState(false)
+    const [cart, setCart] = useState([])
 
     useEffect(() => {
         if(token){
@@ -16,6 +17,8 @@ const UsersAPI = (token) => {
                     setIsLogged(true)
                     res.data.role === 1 ? setIsAdmin(true) : setIsAdmin(false)
 
+                    setCart(res.data.cart)
+
                 } catch (err) {
                     alert(err.response.data.msg)
                 }
@@ -24,9 +27,29 @@ const UsersAPI = (token) => {
             getUser()
         }
     }, [token])
+
+    const addCart = async (product) => {
+        if(!isLogged) return alert("Đăng nhập để tiếp tục mua hàng")
+
+        const check = cart.every(item => {
+            return item._id !== product._id
+        })
+
+        if(check) {
+            setCart([...cart, {...product, quantity: 1}])
+
+            await axios.patch('/user/addcart', {cart: [...cart, {...product, quantity: 1}]}, {
+                headers: {Authorization: token}
+            })
+        } else {
+            alert("Sản phẩm đã được thêm vào giỏ hàng")
+        }
+    }
   return {
     isLogged: [isLogged, setIsLogged],
-    isAdmin: [isAdmin, setIsAdmin]
+    isAdmin: [isAdmin, setIsAdmin],
+    cart: [cart, setCart],
+    addCart: addCart
   }
 }
 

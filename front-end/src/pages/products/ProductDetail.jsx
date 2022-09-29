@@ -14,7 +14,7 @@ const ProductDetail = () => {
 
   const [isAdmin] = state.userAPI.isAdmin
   const [token] = state.token
-
+  
   const deleteProduct = async () => {
     for (let index = 0; index < detailProduct.images.length; index++) {
       imagesList.push(detailProduct.images[index])
@@ -22,9 +22,18 @@ const ProductDetail = () => {
 
     setImagesList(imagesList)
     try {
-      const destroyImg = axios.post('/api/destroy', {public_id: imagesList.map(image => {image.public_id})}, {
+      imagesList.map(async image => {
+        const destroyImg = axios.post('/api/destroy', {public_id: image.public_id}, {
+          headers: {Authorization: token}
+        })
+        await destroyImg
+      })
+      
+      const destroyProduct = axios.delete(`/api/products/${detailProduct._id}`, {
         headers: {Authorization: token}
       })
+      await destroyProduct
+
     } catch (err) {
       alert(err.response.data.msg)
     }
@@ -48,25 +57,21 @@ const ProductDetail = () => {
         <div className="slider">
           <ImageSlider slides={images} />
         </div>
-        {/* {
-            detailProduct.images.map(image => {
-                return <img src={image.url} alt="" key={image.public_id} />
-            })
-        } */}
         <div className="box-detail">
           <div className="row">
             <h2>{detailProduct.name}</h2>
             <h5>ID: {detailProduct.product_id}</h5>
           </div>
-          <span>Giá: {detailProduct.price} VND</span>
+          <span>Giá: {detailProduct.price
+          } VND</span>
           <p><span>Miêu tả: </span> {detailProduct.description}</p>
           <p className="sold">Sold: {detailProduct.sold}</p>
           {
             isAdmin ? <div>
-              <Link to="/" className="delete" onClick={deleteProduct}>
+              <Link to="/products" className="delete" onClick={deleteProduct}>
             Xóa sản phẩm
           </Link>
-          <Link to="/" className="edit">
+          <Link to={`/edit_product/${detailProduct._id}`} className="edit">
             Sửa sản phẩm
           </Link>
             </div> : 

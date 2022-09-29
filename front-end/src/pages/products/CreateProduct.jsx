@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from "react";
 import axios from "axios";
 import { GlobalState } from "../../GlobalState";
-import { createElement } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 
 const initialState = {
   product_id: "",
@@ -18,6 +18,7 @@ const initialImage = {
 };
 
 const CreateProduct = () => {
+  const navigate = useNavigate();
   const state = useContext(GlobalState);
   const [product, setProduct] = useState(initialState);
   const [categories] = state.categoryAPI.categories;
@@ -27,12 +28,31 @@ const CreateProduct = () => {
   const [images, setImages] = useState([]);
   const [imagesAfterDelete, setImagesAfterDelete] = useState([]);
 
-  const [onEdit, setOnEdit] = useState(false)
-  const [callback, setCallback] = state.productAPI.callback
+  const [products, setProducts] = state.productAPI.products;
+
+  const [onEdit, setOnEdit] = useState(false);
 
   const [token] = state.token;
 
   const [isAdmin] = state.userAPI.isAdmin;
+
+  const param = useParams();
+
+  useEffect(() => {
+    if (param.id) {
+      setOnEdit(true);
+      products.forEach((product) => {
+        if (product._id === param.id) {
+          setProduct(product);
+          setImages(product.images);
+        }
+      });
+    } else {
+      setOnEdit(false);
+      setProduct(initialState);
+      setImages([]);
+    }
+  }, [param.id, products]);
 
   const upload = () => {
     try {
@@ -86,7 +106,7 @@ const CreateProduct = () => {
 
       var i;
       for (let index = 0; index < images.length; index++) {
-        if(img.public_id === images[index].public_id){
+        if (img.public_id === images[index].public_id) {
           i = index;
         }
       }
@@ -101,11 +121,11 @@ const CreateProduct = () => {
       images.splice(i, 1);
 
       for (let index = 0; index < images.length; index++) {
-        imagesAfterDelete.push(images[index])
+        imagesAfterDelete.push(images[index]);
       }
 
-      setImages(imagesAfterDelete)
-      setImagesAfterDelete([])
+      setImages(imagesAfterDelete);
+      setImagesAfterDelete([]);
     } catch (err) {
       alert(err.response.data.msg);
     }
@@ -122,14 +142,16 @@ const CreateProduct = () => {
       if (!isAdmin) return alert("You are not an Admin");
       if (!images) return alert("No images upload");
 
-      if(onEdit){
+      if (onEdit) {
         await axios.put(
           `/api/products/${product._id}`,
           { ...product, images },
           {
             headers: { Authorization: token },
           }
-        )
+        );
+
+        alert("Updated product!");
       } else {
         await axios.post(
           "/api/products",
@@ -138,14 +160,14 @@ const CreateProduct = () => {
             headers: { Authorization: token },
           }
         );
+
+        alert("Created a new product!");
       }
-      
 
-      alert("Created a new product!");
-
-      setCallback(!callback)
       setImages([]);
       setProduct(initialState);
+      setProducts([...products])
+      navigate('/products')
     } catch (err) {
       alert(err.response.data.msg);
     }
@@ -162,17 +184,16 @@ const CreateProduct = () => {
           onChange={handleUpload}
         />
         <div id="file_img">
-          {console.log(images)}
           {images.map((image) => {
-            return <div id="imgGroup" key={image.public_id}>
-                  <img src={image.url} alt="" />
-                  <span onClick={() => handleDelete(image)}>X</span>
-                </div>
+            return (
+              <div id="imgGroup" key={image.public_id}>
+                <img src={image.url} alt="" />
+                <span onClick={() => handleDelete(image)}>X</span>
+              </div>
+            );
           })}
         </div>
       </div>
-
-      
 
       <form action="" onSubmit={handleSubmit}>
         <div className="row">
@@ -242,7 +263,9 @@ const CreateProduct = () => {
           </select>
         </div>
 
-        <button type="submit">Thêm sản phẩm</button>
+        <button type="submit">
+          {onEdit ? "Cập nhật thông tin" : "Thêm sản phẩm"}
+        </button>
       </form>
     </div>
   );

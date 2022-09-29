@@ -57,5 +57,8 @@ button {
 /* Create product */
 @import url("./pages/styles/CreateProduct.css");
 
+/* Cart */
+@import url("./pages/styles/Cart.css");
+
 /* Footer */
 @import url("./components//styles/footer.css");

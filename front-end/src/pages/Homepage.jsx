@@ -12,7 +12,9 @@ import ProductDetail from './products/ProductDetail'
 import Category from './category/Category'
 import CreateProduct from './products/CreateProduct'
 
+
 const Homepage = () => {
+  
   return (
     <Routes>
       <Route path="/" exact element={<Landing />}/>
@@ -26,6 +28,7 @@ const Homepage = () => {
 
       <Route path="/category" exact element={<Category />}/>
       <Route path="/create-product" exact element={<CreateProduct />}/>
+      <Route path="/edit_product/:id" exact element={<CreateProduct />} />
 
 
       <Route path="*" exact element={<NotFounded />}/>
