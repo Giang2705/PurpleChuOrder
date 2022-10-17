@@ -12,6 +12,8 @@ const ProductDetail = () => {
   const [detailProduct, setDetailProduct] = useState([]);
   const [imagesList, setImagesList] = useState([])
 
+  const addCart = state.userAPI.addCart
+
   const [isAdmin] = state.userAPI.isAdmin
   const [token] = state.token
   
@@ -75,7 +77,7 @@ const ProductDetail = () => {
             Sửa sản phẩm
           </Link>
             </div> : 
-          <Link to="/cart" className="cart">
+          <Link to="#!" className="cart" onClick={() => addCart(detailProduct)}>
             Thêm vào giỏ
           </Link>
           }

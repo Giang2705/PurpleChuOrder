@@ -29,7 +29,8 @@
     "express-parser": "^1.0.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.6.1",
-    "parser": "^0.1.4"
+    "parser": "^0.1.4",
+    "stripe": "^10.12.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.20"

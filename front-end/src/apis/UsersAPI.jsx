@@ -5,6 +5,7 @@ const UsersAPI = (token) => {
     const [isLogged, setIsLogged] = useState(false)
     const [isAdmin, setIsAdmin] = useState(false)
     const [cart, setCart] = useState([])
+    const [userID, setUserID] = useState();
 
     useEffect(() => {
         if(token){
@@ -18,6 +19,7 @@ const UsersAPI = (token) => {
                     res.data.role === 1 ? setIsAdmin(true) : setIsAdmin(false)
 
                     setCart(res.data.cart)
+                    setUserID(res.data._id)
 
                 } catch (err) {
                     alert(err.response.data.msg)
@@ -49,7 +51,8 @@ const UsersAPI = (token) => {
     isLogged: [isLogged, setIsLogged],
     isAdmin: [isAdmin, setIsAdmin],
     cart: [cart, setCart],
-    addCart: addCart
+    addCart: addCart,
+    id: [userID],
   }
 }
 
