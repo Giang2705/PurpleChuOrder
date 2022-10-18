@@ -6,6 +6,8 @@ const UsersAPI = (token) => {
     const [isAdmin, setIsAdmin] = useState(false)
     const [cart, setCart] = useState([])
     const [userID, setUserID] = useState();
+    const [history, setHistory] = useState([]);
+    const [callback, setCallback] = useState(false)
 
     useEffect(() => {
         if(token){
@@ -30,6 +32,19 @@ const UsersAPI = (token) => {
         }
     }, [token])
 
+    useEffect(() => {
+        if(token){
+            const getHistory = async() => {
+                const res = await axios.get("/user/history", {
+                    headers: {Authorization: token}
+                })
+                setHistory(res.data)
+            }
+            
+            getHistory()
+        }
+    }, [token, callback])
+
     const addCart = async (product) => {
         if(!isLogged) return alert("Đăng nhập để tiếp tục mua hàng")
 
@@ -53,6 +68,8 @@ const UsersAPI = (token) => {
     cart: [cart, setCart],
     addCart: addCart,
     id: [userID],
+    history: [history, setHistory],
+    callback: [callback, setCallback],
   }
 }
 

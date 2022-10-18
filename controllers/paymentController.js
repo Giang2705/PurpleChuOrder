@@ -1,5 +1,5 @@
 const stripe = require("stripe")(process.env.STRIPE_KEY);
-const Payment = require("../models/paymentModel")
+const Payments = require("../models/paymentModel")
 
 const paymentController = {
     getPayment: async(req, res) => {
@@ -23,7 +23,7 @@ const paymentController = {
                   if (stripeErr) {
                     res.status(500).json(stripeErr);
                   } else {
-                    const newPayment = new Payment({
+                    const newPayment = new Payments({
                         user_id: req.body.user_id,
                         tokenId: req.body.tokenId,
                         name: req.body.name,

@@ -11,6 +11,8 @@ import NotFounded from '../utils/NotFounded/NotFounded'
 import ProductDetail from './products/ProductDetail'
 import Category from './category/Category'
 import CreateProduct from './products/CreateProduct'
+import OrderHistory from './orderHistory/OrderHistory'
+import OrderDetail from './orderHistory/OrderDetail'
 
 
 const Homepage = () => {
@@ -25,6 +27,9 @@ const Homepage = () => {
       <Route path="/cart" exact element={<Cart />}/>
       <Route path="/about" exact element={<AboutUs />}/>
       <Route path="/contact" exact element={<Contact />}/>
+
+      <Route path='/history' exact element={<OrderHistory />}/>
+      <Route path='/history/:id' exact element={<OrderDetail />}/>
 
       <Route path="/category" exact element={<Category />}/>
       <Route path="/create-product" exact element={<CreateProduct />}/>

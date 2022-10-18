@@ -13,6 +13,7 @@ const Cart = () => {
   const [cart, setCart] = state.userAPI.cart;
   const [total, setTotal] = useState(0);
   const [token] = state.token;
+  const [callback, setCallback] = state.userAPI.callback;
   const [userID] = state.userAPI.id;
   const [stripeToken, setStripeToken] = useState(null);
 
@@ -25,23 +26,34 @@ const Cart = () => {
     };
 
     const makeRequest = async () => {
-      try {
-        console.log(cart)
-        await userRequest.post("/payment", {
-          user_id: userID,
-          tokenId: stripeToken.id,
-          amount: total,
-          name: stripeToken.card.name,
-          email: stripeToken.email,
-          address: stripeToken.card.address_line1 + ", " + stripeToken.card.address_city + ", " + stripeToken.card.address_country,
-          cart: cart
-        });
-
-      } catch {}
+      await userRequest.post("/payment", {
+        user_id: userID,
+        tokenId: stripeToken.id,
+        amount: total,
+        name: stripeToken.card.name,
+        email: stripeToken.email,
+        address:
+          stripeToken.card.address_line1 +
+          ", " +
+          stripeToken.card.address_city +
+          ", " +
+          stripeToken.card.address_country,
+        cart: cart,
+      });
     };
 
     getTotal();
-    stripeToken && makeRequest();
+    if (cart.length !== 0){
+      stripeToken && makeRequest();
+    }
+
+    if (cart.length !== 0 && stripeToken !== null){  
+      setCart([]);
+      alert("Thanh toán thành công!");
+    }
+
+    addToCart();
+    setCallback(!callback)
   }, [cart, stripeToken, cart.total, total]);
 
   const addToCart = async () => {

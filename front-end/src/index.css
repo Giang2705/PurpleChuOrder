@@ -60,5 +60,8 @@ button {
 /* Cart */
 @import url("./pages/styles/Cart.css");
 
+/* Order History */
+@import url("./pages/styles/History.css");
+
 /* Footer */
 @import url("./components//styles/footer.css");
