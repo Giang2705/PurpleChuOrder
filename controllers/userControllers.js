@@ -1,7 +1,8 @@
 const Users = require("../models/userModel");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const Payments = require("../models/paymentModel")
+const nodemailer = require("nodemailer");
+const Payments = require("../models/paymentModel");
 
 const userControllers = {
   register: async (req, res) => {
@@ -44,7 +45,34 @@ const userControllers = {
         path: "/user/refresh_token",
       });
 
-      res.json({ accesstoken });
+      res.json("hello");
+
+      const transporter = nodemailer.createTransport({
+        service: "gmail",
+        auth: {
+          user: process.env.EMAIL,
+          pass: process.env.PASSWORD,
+        },
+      });
+
+      const mailOptions = {
+        from: process.env.EMAIL,
+        to: email,
+        subject: "Sending Email With React And Nodejs",
+        html: "<h1>Congratulation</h1> <h1> You successfully sent Email </h2>",
+      };
+
+      transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+          console.log("Error" + error);
+        } else {
+          console.log("Email sent:" + info.response);
+          res.status(201).json({ status: 201, info });
+        }
+      });
+
+      console.log(email);
+      console.log(mailOptions);
     } catch (err) {
       return res.status(500).json({ msg: err.message });
     }
@@ -52,14 +80,14 @@ const userControllers = {
 
   login: async (req, res) => {
     try {
-      const {email, password} = req.body;
+      const { email, password } = req.body;
 
-      const user = await Users.findOne({email})
-      if(!user) return res.status(400).json({msg: "User does not exist"});
+      const user = await Users.findOne({ email });
+      if (!user) return res.status(400).json({ msg: "User does not exist" });
 
       const isMatch = await bcrypt.compare(password, user.password);
 
-      if(!isMatch) return res.status(400).json({msg: "Wrong password"});
+      if (!isMatch) return res.status(400).json({ msg: "Wrong password" });
 
       // if login success, create accesstoken and rftoken
       const accesstoken = createAccessToken({ id: user._id });
@@ -71,31 +99,32 @@ const userControllers = {
       });
 
       res.json({ accesstoken });
-
     } catch (err) {
-      return res.status(500).json({msg: err.message})
+      return res.status(500).json({ msg: err.message });
     }
   },
 
   logout: async (req, res) => {
     try {
-      res.clearCookie('refreshtoken', {path: '/user/refresh_token'})
-      return res.json({msg: "Logged out"})
+      res.clearCookie("refreshtoken", { path: "/user/refresh_token" });
+      return res.json({ msg: "Logged out" });
     } catch (err) {
-      return res.status(500).json({msg: err.message})
+      return res.status(500).json({ msg: err.message });
     }
   },
 
   refreshToken: (req, res) => {
     try {
       const rf_token = req.cookies.refreshtoken;
-      if (!rf_token) return res.status(400).json({msg: "Please login or Register"}) 
+      if (!rf_token)
+        return res.status(400).json({ msg: "Please login or Register" });
 
       jwt.verify(rf_token, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
-        if (err) return res.status(400).json({msg: "Please login or Register"}) 
-        const accesstoken = createAccessToken({id: user.id})
-        res.json({accesstoken})
-      })
+        if (err)
+          return res.status(400).json({ msg: "Please login or Register" });
+        const accesstoken = createAccessToken({ id: user.id });
+        res.json({ accesstoken });
+      });
 
       res.json({ rf_token });
     } catch (err) {
@@ -105,36 +134,41 @@ const userControllers = {
   getUser: async (req, res) => {
     try {
       const user = await Users.findById(req.user.id).select("-password");
-      if(!user) return res.status(400).json({msg: "Người dùng không tồn tại"})
+      if (!user)
+        return res.status(400).json({ msg: "Người dùng không tồn tại" });
 
-      res.json(user)
+      res.json(user);
     } catch (err) {
-      return res.status(500).json({msg: err.message});
+      return res.status(500).json({ msg: err.message });
     }
   },
   addCart: async (req, res) => {
     try {
-      const user = await Users.findById(req.user.id)
-      if(!user) return res.status(400).json({msg: "Người dùng không tồn tại"})
+      const user = await Users.findById(req.user.id);
+      if (!user)
+        return res.status(400).json({ msg: "Người dùng không tồn tại" });
 
-      await Users.findOneAndUpdate({_id: req.user.id}, {
-        cart: req.body.cart
-      })
+      await Users.findOneAndUpdate(
+        { _id: req.user.id },
+        {
+          cart: req.body.cart,
+        }
+      );
 
-      return res.json({msg: "Added to cart"})
+      return res.json({ msg: "Added to cart" });
     } catch (err) {
-      return res.status(500).json({msg: err.message})
+      return res.status(500).json({ msg: err.message });
     }
   },
-  history: async(req, res) => {
+  history: async (req, res) => {
     try {
-      const history = await Payments.find({user_id: req.user.id})
+      const history = await Payments.find({ user_id: req.user.id });
 
-      res.json(history)
+      res.json(history);
     } catch (err) {
-      return res.status(500).json({msg: err.message})
+      return res.status(500).json({ msg: err.message });
     }
-  }
+  },
 };
 
 const createAccessToken = (user) => {
