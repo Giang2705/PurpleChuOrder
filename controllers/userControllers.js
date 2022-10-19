@@ -56,7 +56,7 @@ const userControllers = {
       });
 
       const mailOptions = {
-        from: process.env.EMAIL,
+        from: "Purple Chu Order" + process.env.EMAIL,
         to: email,
         subject: "Sending Email With React And Nodejs",
         html: "<h1>Congratulation</h1> <h1> You successfully sent Email </h2>",
