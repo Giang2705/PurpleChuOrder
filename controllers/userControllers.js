@@ -1,8 +1,8 @@
 const Users = require("../models/userModel");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const nodemailer = require("nodemailer");
 const Payments = require("../models/paymentModel");
+const sendmailControllers = require("./sendmailControllers");
 
 const userControllers = {
   register: async (req, res) => {
@@ -33,6 +33,8 @@ const userControllers = {
         address,
       });
 
+      sendmailControllers.sendmailConfirm(email, password)
+
       // Save to mongodb
       await newUser.save();
 
@@ -45,34 +47,6 @@ const userControllers = {
         path: "/user/refresh_token",
       });
 
-      res.json("hello");
-
-      const transporter = nodemailer.createTransport({
-        service: "gmail",
-        auth: {
-          user: process.env.EMAIL,
-          pass: process.env.PASSWORD,
-        },
-      });
-
-      const mailOptions = {
-        from: "Purple Chu Order" + process.env.EMAIL,
-        to: email,
-        subject: "Sending Email With React And Nodejs",
-        html: "<h1>Congratulation</h1> <h1> You successfully sent Email </h2>",
-      };
-
-      transporter.sendMail(mailOptions, (error, info) => {
-        if (error) {
-          console.log("Error" + error);
-        } else {
-          console.log("Email sent:" + info.response);
-          res.status(201).json({ status: 201, info });
-        }
-      });
-
-      console.log(email);
-      console.log(mailOptions);
     } catch (err) {
       return res.status(500).json({ msg: err.message });
     }

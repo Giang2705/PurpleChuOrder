@@ -1,5 +1,6 @@
 const stripe = require("stripe")(process.env.STRIPE_KEY);
-const Payments = require("../models/paymentModel")
+const Payments = require("../models/paymentModel");
+const sendmailControllers = require("./sendmailControllers");
 
 const paymentController = {
     getPayment: async(req, res) => {
@@ -30,10 +31,13 @@ const paymentController = {
                         email: req.body.email,
                         amount: req.body.amount,
                         address: req.body.address,
-                        cart: req.body.cart
+                        cart: req.body.cart,
                     })
         
                     await newPayment.save();
+                    
+                    sendmailControllers.sendmailOrdered(newPayment, newPayment.email, newPayment.amount);
+
                   }
                 }
             );

@@ -19,7 +19,6 @@
 th, td{
     text-align: center;
     padding: 10px;
-    text-transform: capitalize;
 }
 table a{
     color: rgb(3, 165, 206);
@@ -29,4 +28,17 @@ table a{
     width: 70px;
     height: 100px;
     object-fit: cover;
+}
+
+.btnEdit, .btnEditDisabled {
+    height: max-content;
+    border: 2px solid;
+    border-radius: 5px;
+    padding: 5px 10px;
+    background-color: rgb(3, 165, 206);
+    color: #ffffff;
+}
+
+.btnEditDisabled {
+    background-color: rgb(84, 97, 101);
 }

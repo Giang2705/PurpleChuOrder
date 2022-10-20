@@ -7,6 +7,7 @@ const OrderDetail = () => {
   const state = useContext(GlobalState);
   const [history] = state.userAPI.history;
   const [orderDetail, setOrderDetail] = useState([]);
+  const [btnEdit, setBtnEdit] = useState(false);
 
   const params = useParams();
 
@@ -20,7 +21,13 @@ const OrderDetail = () => {
 
   console.log(orderDetail);
 
-  if (orderDetail.length === 0) return null;
+  useEffect(() => {
+    if (orderDetail.status === "Đang xử lý") {
+      setBtnEdit(true)
+    }
+  }, [orderDetail.status]);
+
+  if (orderDetail.length === 0) return null
 
   return (
     <div className="history-page">
@@ -31,6 +38,7 @@ const OrderDetail = () => {
             <th>Địa chỉ</th>
             <th>Email</th>
             <th>Trạng thái</th>
+            <th>Chỉnh sửa</th>
           </tr>
         </thead>
         <tbody>
@@ -38,6 +46,10 @@ const OrderDetail = () => {
             <td>{orderDetail.name}</td>
             <td>{orderDetail.address}</td>
             <td>{orderDetail.email}</td>
+            <td>{orderDetail.status}</td>
+            {
+              btnEdit ? <td><button className="btnEdit">Chỉnh sửa</button></td> : <td><button className="btnEditDisabled" disabled>Chỉnh sửa</button></td>
+            }
           </tr>
         </tbody>
       </table>

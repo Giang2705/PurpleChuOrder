@@ -31,8 +31,8 @@ const paymentSchema = new mongoose.Schema({
         type: Number,
     },
     status: {
-        type: Boolean,
-        default: false,
+        type: String,
+        default: "Đang xử lý",
     },
 }, {
     timestamps: true,
