@@ -21,9 +21,11 @@ const Contact = () => {
   const inquirySubmit = async e => {
     e.preventDefault()
     try {
-       if (await axios.post('/api/inquiries', {...inquiries})) {
+       if (axios.post('/api/inquiries', {...inquiries})) {
         alert('Cám ơn bạn đã gửi thắc mắc, chúng tôi sẽ cố gắng trả lời sớm nhất có thể.')
         setCallback(!callback)
+        inquiries.subject = ""
+        inquiries.content = ""
        }
 
     } catch (err) {

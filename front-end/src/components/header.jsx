@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { GlobalState } from "../GlobalState";
 import Menu from "./icon/bars-solid.svg";
 import Close from "./icon/xmark-solid.svg";
@@ -11,6 +11,7 @@ const Header = () => {
 
   const [isLogged, setIsLogged] = state.userAPI.isLogged;
   const [isAdmin, setIsAdmin] = state.userAPI.isAdmin;
+  const [callback, setCallback] = state.userAPI.callback
   const [cart] = state.userAPI.cart;
   const [inquiries] = state.userAPI.inquiries;
   const [allInquiries] = state.inquiriesAPI.inquiries;
@@ -21,6 +22,17 @@ const Header = () => {
     setIsAdmin(false);
     setIsLogged(false);
   };
+
+  const countHandle = (array) => {
+    let len = 0
+    for (let index = 0; index < array.length; index++) {
+      if(array[index].status !== "Đã trả lời"){
+        len += 1
+      }
+    }
+    
+    return len
+  }
   
   return (
     <header>
@@ -63,7 +75,7 @@ const Header = () => {
           <div className="qna-header">
             {isLogged ? (
               <div>
-                <span>{isAdmin ? allInquiries.length : inquiries.length}</span>
+                {isAdmin && countHandle(allInquiries) !== 0 ? <span>{countHandle(allInquiries)}</span> : countHandle(inquiries) !== 0 ? <span>{countHandle(inquiries)}</span> : null}
                 <Link to="/qna">Thắc mắc/ Giải đáp</Link>
               </div>
             ) : null}

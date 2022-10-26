@@ -15,14 +15,15 @@ const Register = () => {
   const registerSubmit = async e => {
     e.preventDefault()
     try {
-      await axios.post('/user/register', {...user})
+      if (axios.post('/user/register', {...user})){
 
-      localStorage.setItem('firstLogin', true)
+        localStorage.setItem('firstLogin', true)
 
       
-      alert('Đăng ký tài khoản thành công!')
-
-      window.location.href = "/products";
+        alert('Đăng ký tài khoản thành công!')
+  
+        window.location.href = "/products";
+      }
     } catch (err) {
       alert(err.response.data.msg)
     }
