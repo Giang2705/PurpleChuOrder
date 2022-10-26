@@ -6,7 +6,11 @@ const UsersAPI = (token) => {
     const [isAdmin, setIsAdmin] = useState(false)
     const [cart, setCart] = useState([])
     const [userID, setUserID] = useState();
+    const [name, setName] = useState();
+    const [email, setEmail] = useState();
     const [history, setHistory] = useState([]);
+    const [inquiries, setInquiries] = useState([]);
+    const [phone, setPhone] = useState([])
     const [callback, setCallback] = useState(false)
 
     useEffect(() => {
@@ -22,6 +26,9 @@ const UsersAPI = (token) => {
 
                     setCart(res.data.cart)
                     setUserID(res.data._id)
+                    setEmail(res.data.email)
+                    setName(res.data.name)
+                    setPhone(res.data.phone)
 
                 } catch (err) {
                     alert(err.response.data.msg)
@@ -40,7 +47,15 @@ const UsersAPI = (token) => {
                 })
                 setHistory(res.data)
             }
+
+            const getInquiries = async() => {
+                const res = await axios.get("/user/inquiries", {
+                    headers: {Authorization: token}
+                })
+                setInquiries(res.data)
+            }
             
+            getInquiries()
             getHistory()
         }
     }, [token, callback])
@@ -68,7 +83,11 @@ const UsersAPI = (token) => {
     cart: [cart, setCart],
     addCart: addCart,
     id: [userID],
+    name: [name],
+    email: [email],
     history: [history, setHistory],
+    inquiries: [inquiries, setInquiries],
+    phone: [phone],
     callback: [callback, setCallback],
   }
 }

@@ -43,8 +43,7 @@ const Footer = () => {
               <img src={Time} alt="" />
             </span>
             <Link to="/">
-              09:00AM - 12:00PM,
-              02:00PM - 07:30PM
+              09:00AM - 04:00PM
             </Link>
           </li>
         </ul>

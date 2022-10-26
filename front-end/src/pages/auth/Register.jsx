@@ -19,6 +19,9 @@ const Register = () => {
 
       localStorage.setItem('firstLogin', true)
 
+      
+      alert('Đăng ký tài khoản thành công!')
+
       window.location.href = "/products";
     } catch (err) {
       alert(err.response.data.msg)

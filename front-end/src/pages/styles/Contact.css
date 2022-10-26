@@ -1,0 +1,43 @@
+.contact-page {
+    margin: 30px 50px;
+    line-height: 35px;
+}
+.information {
+    text-align: justify;
+    border: 2px solid;
+    margin: 30px 0;
+    padding: 10px 30px;
+}
+
+.information h4 {
+    text-align: justify;
+    margin: 0;
+}
+
+.contact-page .contactForm .title p {
+    font-style: italic;
+}
+
+.contact-page .contactForm label {
+    font-weight: 700;
+}
+
+.contact-page .contactForm button {
+    border: 2px solid;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #AB82FF;
+    color: #FFFFFF;
+    transition: all 0.5s;
+    font-size: 17px;
+    height: fit-content;
+}
+
+.contact-page .contactForm button:hover {
+    background-color: #432f6a;
+}
+
+input {
+    height: 30px;
+    width: 50%;
+}

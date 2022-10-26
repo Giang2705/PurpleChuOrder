@@ -19,6 +19,7 @@ app.use("/api", require("./routes/categoryRoutes"))
 app.use("/api", require("./routes/upload"))
 app.use("/api", require("./routes/productRoutes"))
 app.use("/api", require("./routes/paymentRoutes"))
+app.use("/api", require("./routes/inquiryRoutes"))
 
 // Connect to mongodb
 const URI = process.env.MONGODB_URL

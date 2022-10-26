@@ -16,4 +16,6 @@ router.patch("/addcart", auth, userControllers.addCart)
 
 router.get("/history", auth, userControllers.history)
 
+router.get("/inquiries", auth, userControllers.inquiries)
+
 module.exports = router;

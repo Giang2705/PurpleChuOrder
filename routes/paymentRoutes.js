@@ -7,4 +7,7 @@ router.route('/payment')
     .get(paymentController.getPayment)
     .post(paymentController.createPayment)
 
+router.route('/payment/:id')
+    .put(paymentController.updatePayment)
+
 module.exports = router

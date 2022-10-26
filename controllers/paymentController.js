@@ -45,6 +45,16 @@ const paymentController = {
         } catch (err) {
             return res.status(500).json({msg: err.message})
         }
+    },
+    updatePayment: async (req, res) => {
+      try {
+          const {address, status} = req.body;
+          await Payments.findOneAndUpdate({_id: req.params.id}, {address, status})
+
+          res.json({msg: "Updated payment"})
+      } catch (err) {
+          return res.status(500).json({msg: err.message})
+      }
     }
 }
 

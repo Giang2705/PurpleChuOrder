@@ -1,9 +1,10 @@
-import React from 'react'
+import React from "react";
+import Carousel from "../../utils/Carousel/Carousel";
 
 const Landing = () => {
   return (
-    <div>Landing</div>
-  )
-}
+      <Carousel />
+  );
+};
 
-export default Landing
+export default Landing;

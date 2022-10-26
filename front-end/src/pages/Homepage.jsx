@@ -4,7 +4,6 @@ import Landing from './landingPage/Landing'
 import ProductsListPage from './products/ProductsListPage'
 import Login from './auth/Login'
 import Register from './auth/Register'
-import AboutUs from './about/AboutUs'
 import Contact from './contact/Contact'
 import Cart from './cart/Cart'
 import NotFounded from '../utils/NotFounded/NotFounded'
@@ -13,6 +12,8 @@ import Category from './category/Category'
 import CreateProduct from './products/CreateProduct'
 import OrderHistory from './orderHistory/OrderHistory'
 import OrderDetail from './orderHistory/OrderDetail'
+import QnA from './QnA/QnA'
+import QnADetails from './QnA/QnADetails'
 
 
 const Homepage = () => {
@@ -25,8 +26,9 @@ const Homepage = () => {
       <Route path="/login" exact element={<Login />}/>
       <Route path="/register" exact element={<Register />}/>
       <Route path="/cart" exact element={<Cart />}/>
-      <Route path="/about" exact element={<AboutUs />}/>
       <Route path="/contact" exact element={<Contact />}/>
+      <Route path='/qna' exact element={<QnA />}/>
+      <Route path='/qna/:id' exact element={<QnADetails />}/>
 
       <Route path='/history' exact element={<OrderHistory />}/>
       <Route path='/history/:id' exact element={<OrderDetail />}/>

@@ -30,7 +30,7 @@ table a{
     object-fit: cover;
 }
 
-.btnEdit, .btnEditDisabled {
+.history-page .btnEdit, .history-page .btnEditDisabled {
     height: max-content;
     border: 2px solid;
     border-radius: 5px;
@@ -39,6 +39,10 @@ table a{
     color: #ffffff;
 }
 
-.btnEditDisabled {
+.history-page .btnEditDisabled {
     background-color: rgb(84, 97, 101);
+}
+
+.editArea {
+    margin: 30px 60px;
 }

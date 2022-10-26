@@ -179,6 +179,84 @@ const sendmailControllers = {
       }
     });
   },
+
+  sendmailNewQuestionUser: (email) => {
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: process.env.EMAIL,
+        pass: process.env.PASSWORD,
+      },
+    });
+
+    const mailOptions = {
+      from: "Purple Chu Order" + process.env.EMAIL,
+      to: email,
+      subject: "Một thắc mắc mới đã được tiếp nhận",
+      html: `<h1>Purple Chu cám ơn sự tương tác của bạn!</h1> <h4>Cám ơn bạn đã đặt câu hỏi cho shop. Tụi mình sẽ cố gắng giải đáp sớm nhất có thể cho bạn nhé! Bạn vui lòng đợi mail thông báo khi có câu trả lời ạ! Tụi mình cám ơn bạn nhiều nha.</h4>`,
+    };
+
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        console.log("Error" + error);
+      } else {
+        console.log("Email sent:" + info.response);
+        res.status(201).json({ status: 201, info });
+      }
+    });
+  },
+
+  sendmailNewQuestionAdmin: () => {
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: process.env.EMAIL,
+        pass: process.env.PASSWORD,
+      },
+    });
+
+    const mailOptions = {
+      from: "Purple Chu Order" + process.env.EMAIL,
+      to: process.env.EMAIL,
+      subject: "Một thắc mắc mới đã được tiếp nhận",
+      html: `<h1>Có một thắc mắc mới!</h1> <h4>Hệ thống tiếp nhận một thắc mắc mới! Hãy truy cập vào website và giải đáp thắc mắc.</h4>`,
+    };
+
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        console.log("Error" + error);
+      } else {
+        console.log("Email sent:" + info.response);
+        res.status(201).json({ status: 201, info });
+      }
+    });
+  },
+
+  sendmailNewAnswer: (email) => {
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: process.env.EMAIL,
+        pass: process.env.PASSWORD,
+      },
+    });
+
+    const mailOptions = {
+      from: "Purple Chu Order" + process.env.EMAIL,
+      to: email,
+      subject: "Thắc mắc của bạn đã được giải đáp!",
+      html: `<h4>Thắc mắc của bạn đã được trả lời. Bạn vui lòng truy cập website để xem câu trả lời nhe. Purple Chu cám ơn bạn ạ.</h4>`,
+    };
+
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        console.log("Error" + error);
+      } else {
+        console.log("Email sent:" + info.response);
+        res.status(201).json({ status: 201, info });
+      }
+    });
+  }
 };
 
 module.exports = sendmailControllers;

@@ -39,6 +39,9 @@ button {
 /* Header */
 @import url("./components//styles/header.css");
 
+/* Home */
+@import url("./pages//styles//Home.css");
+
 /* Products List */
 @import url("./pages/styles/ProductsList.css");
 
@@ -62,6 +65,9 @@ button {
 
 /* Order History */
 @import url("./pages/styles/History.css");
+
+/* Contact */
+@import url("./pages/styles/Contact.css");
 
 /* Footer */
 @import url("./components//styles/footer.css");
