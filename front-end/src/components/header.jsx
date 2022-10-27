@@ -33,6 +33,17 @@ const Header = () => {
     
     return len
   }
+
+  const countAnswered = (array) => {
+    let len = 0
+    for (let index = 0; index < array.length; index++) {
+      if(array[index].status === "Đã trả lời"){
+        len += 1
+      }
+    }
+
+    return len
+  }
   
   return (
     <header>
@@ -75,7 +86,10 @@ const Header = () => {
           <div className="qna-header">
             {isLogged ? (
               <div>
-                {isAdmin && countHandle(allInquiries) !== 0 ? <span>{countHandle(allInquiries)}</span> : countHandle(inquiries) !== 0 ? <span>{countHandle(inquiries)}</span> : null}
+                {isAdmin && countHandle(allInquiries) !== 0 ? <span>{countHandle(allInquiries)}</span> : countHandle(inquiries) !== 0 ? <span className="notAnswered">{countHandle(inquiries)}</span> : null}
+                {
+                  countAnswered(inquiries) !== 0 ? <span className="answered">{countAnswered(inquiries)}</span> : null
+                }
                 <Link to="/qna">Thắc mắc/ Giải đáp</Link>
               </div>
             ) : null}

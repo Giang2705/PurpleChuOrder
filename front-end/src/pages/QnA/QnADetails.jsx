@@ -1,7 +1,6 @@
 import axios from "axios";
 import React, { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
-import { Link } from "react-router-dom";
 import { GlobalState } from "../../GlobalState";
 
 const QnADetails = () => {
@@ -31,14 +30,14 @@ const QnADetails = () => {
   const update = async (e) => {
     e.preventDefault();
     try {
-        await axios.put(`/api/inquiries/${params.id}`, {
-          answer:  answer,
+        if(await axios.put(`/api/inquiries/${params.id}`, {
+          answer: answer,
           status: "Đã trả lời",
           email: inquiryDetail.email
-        });
-
-      setIsEdit(false);
-      setCallback(!callback);
+        })) {
+          setCallback(!callback);
+          setIsEdit(false);
+        };
     } catch (err) {
       alert(err.response.data.msg);
     }
@@ -66,11 +65,6 @@ const QnADetails = () => {
     }
   }, [params.id, inquiries]);
 
-//   useEffect(() => {
-//     if (orderDetail.status === "Đang xử lý") {
-//       setBtnEdit(true);
-//     }
-//   }, [orderDetail.status]);
 
   if (inquiryDetail.length === 0) return null;
 

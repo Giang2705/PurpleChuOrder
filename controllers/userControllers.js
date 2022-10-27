@@ -48,6 +48,8 @@ const userControllers = {
         path: "/user/refresh_token",
       });
 
+      res.json({accesstoken})
+
     } catch (err) {
       return res.status(500).json({ msg: err.message });
     }
@@ -98,7 +100,7 @@ const userControllers = {
         if (err)
           return res.status(400).json({ msg: "Please login or Register" });
         const accesstoken = createAccessToken({ id: user.id });
-        res.json({ accesstoken });
+        res.json({user, accesstoken });
       });
 
       res.json({ rf_token });
