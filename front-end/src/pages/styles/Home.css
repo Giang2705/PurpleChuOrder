@@ -89,7 +89,7 @@ body {
     letter-spacing: 0.2ch;
   }
 
-.slideBackground {
+/* .slideBackground {
   position: fixed;
   top: 0;
   left: -10%;
@@ -103,7 +103,7 @@ body {
   pointer-events: none;
 
   transform: translateX(calc(10% * var(--dir)));
-}
+} */
 
 .slide[data-active] {
   z-index: 2;
@@ -132,3 +132,28 @@ body {
       transform: perspective(1000px) rotateY(calc(var(--x) * 45deg))
         rotateX(calc(var(--y) * -45deg));
     }
+
+/* Products carousel */
+.products-carousel{
+  margin: 100px auto;
+}
+.products-carousel h1{
+  font-size: 50px;
+}
+.products-carousel a{
+  font-size: 25px;
+  margin-left: 130px;
+  font-weight: 900;
+  color: #000;
+  text-decoration: underline;
+  transition: all 0.5s;
+}
+.products-carousel a:hover{
+  opacity: 0.5;
+}
+
+.products-carousel img {
+  margin-top: 30px;
+  height: 300px;
+  width: 70%;
+}
