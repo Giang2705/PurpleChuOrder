@@ -3,6 +3,8 @@ import ProductItem from "../../components/productItem/ProductItem";
 import { GlobalState } from "../../GlobalState";
 import axios from "axios";
 import Filters from "./Filters";
+import LoadMore from "./LoadMore";
+import Loading from "../../utils/Loading/Loading";
 
 const ProductsListPage = () => {
   const state = useContext(GlobalState);
@@ -16,6 +18,9 @@ const ProductsListPage = () => {
           return <ProductItem key={product._id} product={product} />;
         })}
       </div>
+      <LoadMore />
+      {products.length === 0 && <Loading />}
+        
     </>
   );
 };

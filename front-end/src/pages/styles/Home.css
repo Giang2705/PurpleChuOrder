@@ -135,7 +135,10 @@ body {
 
 /* Products carousel */
 .products-carousel{
-  margin: 100px auto;
+  margin: 100px 30px;
+}
+.products-carousel .title {
+ margin: 30px auto; 
 }
 .products-carousel h1{
   font-size: 50px;
@@ -155,5 +158,38 @@ body {
 .products-carousel img {
   margin-top: 30px;
   height: 300px;
-  width: 70%;
+  width: 100%;
+}
+
+/* Notice panel */
+.notice-area {
+  margin: 30px;
+}
+.notice-area .container {
+  margin: 20px 0;
+}
+.list-group {
+  margin-bottom: 20px;
+}
+.list-group .list-group-item{
+  border: 1px solid rgba(0, 0, 0, 0.31);
+  padding: 10px;
+  transition: all 0.5s;
+}
+.pagination li .page-item{
+  border: 1px solid;
+  width: max-content;
+  padding: 5px 10px;
+  cursor: pointer;
+  display: inline-flex;
+  transition: all 0.5s;
+}
+.list-group .list-group-item:hover{
+  border: 1px solid rgba(184, 113, 255, 0.905);
+}
+.pagination .page-item:hover{
+  background-color: rgba(178, 114, 255, 0.268);
+}
+.pagination .page-item.active{
+  background-color: rgba(178, 114, 255, 0.268);
 }

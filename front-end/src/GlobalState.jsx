@@ -4,6 +4,7 @@ import UsersAPI from './apis/UsersAPI'
 import CategoriesAPI from './apis/CategoriesAPI'
 import axios from 'axios'
 import InquiriesAPI from './apis/InquiriesAPI'
+import NotificationsAPI from './apis/NotificationsAPI'
 
 export const GlobalState = createContext()
 
@@ -27,6 +28,7 @@ export const DataProvider = ({children}) => {
         userAPI: UsersAPI(token),
         categoryAPI: CategoriesAPI(),
         inquiriesAPI: InquiriesAPI(),
+        notiAPI: NotificationsAPI(),
     }
 
     return (
