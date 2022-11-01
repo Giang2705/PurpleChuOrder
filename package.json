@@ -9,7 +9,7 @@
     "client": "cd front-end && npm run start",
     "server-install": "npm install",
     "client-install": "cd front-end && npm install",
-    "install-all": "concurrently \"npm run server-install\" \"npm run server-install\"",
+    "install-all": "concurrently \"npm run server-install\" \"npm run client-install\"",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "heroku-postbuild": "cd front-end && npm install && npm run build"
   },
