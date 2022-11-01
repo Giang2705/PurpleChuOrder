@@ -6,14 +6,17 @@
   "scripts": {
     "start": "node server.js",
     "server": "nodemon server.js",
-    "client": "cd client && npm run start",
+    "client": "cd client && npm start",
     "server-install": "npm install",
     "client-install": "cd client && npm install",
     "install-all": "concurrently \"npm run server-install\" \"npm run client-install\"",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "heroku-postbuild": "cd client && npm install --force --save && npm run build"
   },
-  
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Giang2705/PurpleChuOrder.git"
+  },
   "author": "",
   "license": "ISC",
   "bugs": {
