@@ -4,15 +4,15 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "build": "cd front-end && npm run build",
+    "build": "cd client && npm run build",
     "start": "node server.js",
     "server": "nodemon server.js",
-    "client": "cd front-end && npm run start",
+    "client": "cd client && npm run start",
     "server-install": "npm install",
-    "client-install": "cd front-end && npm install",
+    "client-install": "cd client && npm install",
     "install-all": "concurrently \"npm run server-install\" \"npm run client-install\"",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "heroku-postbuild": "npm run client-install --force --save && npm run build"
+    "heroku-postbuild": "npm client-install --force --save && npm run build"
   },
   "repository": {
     "type": "git",
