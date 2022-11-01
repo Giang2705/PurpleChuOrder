@@ -12,7 +12,7 @@
     "client-install": "cd front-end && npm install",
     "install-all": "concurrently \"npm run server-install\" \"npm run client-install\"",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "heroku-postbuild": "npm client-install --force --save && npm run build"
+    "heroku-postbuild": "npm run client-install --force --save && npm run build"
   },
   "repository": {
     "type": "git",
