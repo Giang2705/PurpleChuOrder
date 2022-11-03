@@ -1,4 +1,5 @@
 import React from 'react';
+import { HiSpeakerphone } from 'react-icons/hi'
 
 const Posts = ({ posts, loading }) => {
   if (loading) {
@@ -8,8 +9,7 @@ const Posts = ({ posts, loading }) => {
   return (
     <ul className='list-group'>
       {posts.map(post => (
-        <li key={post._id} className='list-group-item'>
-          {post.content}
+        <li key={post._id} className='list-group-item'><HiSpeakerphone className='icon' /><span>{post.content}</span>
         </li>
       ))}
     </ul>

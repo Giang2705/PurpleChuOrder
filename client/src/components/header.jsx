@@ -1,8 +1,8 @@
 import React, { useContext, useState } from "react";
 import { GlobalState } from "../GlobalState";
-import Menu from "./icon/bars-solid.svg";
-import Close from "./icon/xmark-solid.svg";
-import Cart from "./icon/cart-shopping-solid.svg";
+import { AiOutlineMenu } from "react-icons/ai";
+import { AiOutlineClose } from "react-icons/ai";
+import { TfiShoppingCartFull } from "react-icons/tfi";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
@@ -11,7 +11,7 @@ const Header = () => {
 
   const [isLogged, setIsLogged] = state.userAPI.isLogged;
   const [isAdmin, setIsAdmin] = state.userAPI.isAdmin;
-  const [callback, setCallback] = state.userAPI.callback
+  const [menu, setMenu] = useState(false);
   const [cart] = state.userAPI.cart;
   const [inquiries] = state.userAPI.inquiries;
   const [allInquiries] = state.inquiriesAPI.inquiries;
@@ -24,31 +24,35 @@ const Header = () => {
   };
 
   const countHandle = (array) => {
-    let len = 0
+    let len = 0;
     for (let index = 0; index < array.length; index++) {
-      if(array[index].status !== "Đã trả lời"){
-        len += 1
+      if (array[index].status !== "Đã trả lời") {
+        len += 1;
       }
     }
-    
-    return len
-  }
+
+    return len;
+  };
 
   const countAnswered = (array) => {
-    let len = 0
+    let len = 0;
     for (let index = 0; index < array.length; index++) {
-      if(array[index].status === "Đã trả lời"){
-        len += 1
+      if (array[index].status === "Đã trả lời") {
+        len += 1;
       }
     }
 
-    return len
-  }
-  
+    return len;
+  };
+
+  const styleMenu = {
+    left: menu ? 0 : "-100%",
+  };
+
   return (
     <header>
-      <div className="menu">
-        <img src={Menu} alt="" width={30} />
+      <div onClick={() => setMenu(!menu)}>
+        <AiOutlineMenu width={30} className="menu"/>
       </div>
 
       <div className="logo">
@@ -57,7 +61,7 @@ const Header = () => {
         </h1>
       </div>
 
-      <ul>
+      <ul style={styleMenu}>
         <li>
           <Link to="/">Trang chủ</Link>
         </li>
@@ -86,10 +90,14 @@ const Header = () => {
           <div className="qna-header">
             {isLogged ? (
               <div>
-                {isAdmin && countHandle(allInquiries) !== 0 ? <span>{countHandle(allInquiries)}</span> : countHandle(inquiries) !== 0 ? <span className="notAnswered">{countHandle(inquiries)}</span> : null}
-                {
-                  countAnswered(inquiries) !== 0 ? <span className="answered">{countAnswered(inquiries)}</span> : null
-                }
+                {isAdmin && countHandle(allInquiries) !== 0 ? (
+                  <span>{countHandle(allInquiries)}</span>
+                ) : countHandle(inquiries) !== 0 ? (
+                  <span className="notAnswered">{countHandle(inquiries)}</span>
+                ) : null}
+                {countAnswered(inquiries) !== 0 ? (
+                  <span className="answered">{countAnswered(inquiries)}</span>
+                ) : null}
                 <Link to="/qna">Thắc mắc/ Giải đáp</Link>
               </div>
             ) : null}
@@ -106,21 +114,21 @@ const Header = () => {
           )}
         </li>
 
-        <li>
-          <img className="menu" src={Close} alt="" width={30} />
+        <li onClick={() => setMenu(!menu)}>
+          <AiOutlineClose width="30" className="close" />
         </li>
-      </ul>
 
-      {isAdmin || !isLogged ? (
-        ""
-      ) : (
-        <div className="cart-icon">
-          <span>{cart.length}</span>
-          <Link to="/cart">
-            <img src={Cart} alt="" width={30} />
-          </Link>
-        </div>
-      )}
+        {isAdmin || !isLogged ? (
+          ""
+        ) : (
+          <li className="cart-icon">
+            <span>{cart.length}</span>
+            <Link to="/cart">
+              <TfiShoppingCartFull className="cart" />
+            </Link>
+          </li>
+        )}
+      </ul>
     </header>
   );
 };

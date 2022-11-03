@@ -42,7 +42,7 @@ const NoticePanel = () => {
   
   return (
     <div className="notice-area">
-      <h1>NoticePanel</h1>
+      <h1>Thông báo</h1>
       <hr />
 
       <div className="container">

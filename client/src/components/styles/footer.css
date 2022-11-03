@@ -1,5 +1,5 @@
 footer {
-    padding: 0 40px;
+    padding: 20px 40px;
     min-height: 70px;
     width: 100%;
     overflow: hidden;
@@ -7,7 +7,7 @@ footer {
     flex-wrap: wrap;
     justify-content: space-around;
     align-items: center;
-    background-color: #FFF5FF;
+    background-color: #000000;
 }
 footer img {
     width: 400px;
@@ -15,7 +15,33 @@ footer img {
 footer .listInformation ul li{
     margin: 10px auto;
 }
-footer .listInformation img {
+footer .listInformation ul li a{
+    display: inline-block;
+    position: relative;
+    color: #ffffff;
+    transition: all 0.5s;
+}
+footer .listInformation ul li a::after{
+    content: "";
+    position: absolute;
+    width: 100%;
+    transform: scaleX(0);
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: #c5c0ff;
+    transform-origin: bottom right;
+    transition: transform 0.5s ease-out;
+}
+footer .listInformation ul li a:hover::after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
+}
+footer .listInformation ul li a:hover {
+    opacity: 0.7;
+}
+footer .listInformation .icon {
     width: 20px;
     margin-right: 10px;
+    color: white;
 }

@@ -1,11 +1,10 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import Logo from "./icon/logo.png";
-import Facebook from "./icon/facebook.svg";
-import Shopee from "./icon/s-solid.svg";
-import Phone from "./icon/phone-solid.svg";
-import Location from "./icon/location-dot-solid.svg";
-import Time from "./icon/clock-solid.svg";
+import { BsFacebook } from "react-icons/bs";
+import { FaShopify } from "react-icons/fa";
+import { BiPhoneCall } from "react-icons/bi";
+import { GoLocation } from "react-icons/go";
+import { BsClock } from "react-icons/bs";
 
 const Footer = () => {
   return (
@@ -14,37 +13,37 @@ const Footer = () => {
         <ul>
           <li>
             <span>
-              <img src={Facebook} alt="" />
+              <BsFacebook className="icon" />
             </span>
-            <Link to="/">facebook.com/purplechuorder</Link>
+            <a href="http://facebook.com/purplechuorder" target="_blank" rel="noopener">facebook.com/purplechuorder</a>
           </li>
           <li>
             <span>
-              <img src={Shopee} alt="" />
+              <FaShopify className="icon" />
             </span>
-            <Link to="/">Purple Chu / Chichunhaque</Link>
+            <a href="https://shopee.vn/chichunhaque" target="_blank" rel="noopener">Purple Chu / Chichunhaque</a>
           </li>
           <li>
             <span>
-              <img src={Phone} alt="" />
+              <BiPhoneCall className="icon" />
             </span>
-            <Link to="/">0798724457</Link>
+            <a href="tel: 0798724457">0798724457</a>
           </li>
           <li>
             <span>
-              <img src={Location} alt="" />
+              <GoLocation className="icon" />
             </span>
-            <Link to="/">
+            <a href="https://goo.gl/maps/Hqza24FMTXcj2p9v8" target="_blank" rel="noopener">
               453/32 Nguyễn Đình Chiểu, Phường 5, Quận 3, TPHCM
-            </Link>
+            </a>
           </li>
           <li>
             <span>
-              <img src={Time} alt="" />
+              <BsClock className="icon" />
             </span>
-            <Link to="/">
+            <a href="/">
               09:00AM - 04:00PM
-            </Link>
+            </a>
           </li>
         </ul>
       </div>
