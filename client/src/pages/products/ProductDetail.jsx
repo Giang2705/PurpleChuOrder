@@ -10,36 +10,42 @@ const ProductDetail = () => {
   const state = useContext(GlobalState);
   const [products] = state.productAPI.products;
   const [detailProduct, setDetailProduct] = useState([]);
-  const [imagesList, setImagesList] = useState([])
+  const [imagesList, setImagesList] = useState([]);
 
-  const addCart = state.userAPI.addCart
+  const addCart = state.userAPI.addCart;
 
-  const [isAdmin] = state.userAPI.isAdmin
-  const [token] = state.token
-  
+  const [isAdmin] = state.userAPI.isAdmin;
+  const [token] = state.token;
+
   const deleteProduct = async () => {
     for (let index = 0; index < detailProduct.images.length; index++) {
-      imagesList.push(detailProduct.images[index])
+      imagesList.push(detailProduct.images[index]);
     }
 
-    setImagesList(imagesList)
+    setImagesList(imagesList);
     try {
-      imagesList.map(async image => {
-        const destroyImg = axios.post('/api/destroy', {public_id: image.public_id}, {
-          headers: {Authorization: token}
-        })
-        await destroyImg
-      })
-      
-      const destroyProduct = axios.delete(`/api/products/${detailProduct._id}`, {
-        headers: {Authorization: token}
-      })
-      await destroyProduct
+      imagesList.map(async (image) => {
+        const destroyImg = axios.post(
+          "/api/destroy",
+          { public_id: image.public_id },
+          {
+            headers: { Authorization: token },
+          }
+        );
+        await destroyImg;
+      });
 
+      const destroyProduct = axios.delete(
+        `/api/products/${detailProduct._id}`,
+        {
+          headers: { Authorization: token },
+        }
+      );
+      await destroyProduct;
     } catch (err) {
-      alert(err.response.data.msg)
+      alert(err.response.data.msg);
     }
-  }
+  };
 
   useEffect(() => {
     if (params.id) {
@@ -51,7 +57,7 @@ const ProductDetail = () => {
 
   if (detailProduct.length === 0) return null;
 
-  const images = detailProduct.images
+  const images = detailProduct.images;
 
   return (
     <>
@@ -64,23 +70,33 @@ const ProductDetail = () => {
             <h2>{detailProduct.name}</h2>
             <h5>ID: {detailProduct.product_id}</h5>
           </div>
-          <span>Giá: {detailProduct.price
-          } VND</span>
-          <p><span>Miêu tả: </span> {detailProduct.description}</p>
-          <p className="sold">Sold: {detailProduct.sold}</p>
-          {
-            isAdmin ? <div>
-              <Link to="/products" className="delete" onClick={deleteProduct}>
-            Xóa sản phẩm
-          </Link>
-          <Link to={`/edit_product/${detailProduct._id}`} className="edit">
-            Sửa sản phẩm
-          </Link>
-            </div> : 
-          <Link to="#!" className="cart" onClick={() => addCart(detailProduct)}>
-            Thêm vào giỏ
-          </Link>
-          }
+          <div className="row">
+            <span>Giá: {detailProduct.price} VND</span>
+            {isAdmin ? (
+              <div>
+                <Link to="/products" className="delete" onClick={deleteProduct}>
+                  Xóa sản phẩm
+                </Link>
+                <Link
+                  to={`/edit_product/${detailProduct._id}`}
+                  className="edit"
+                >
+                  Sửa sản phẩm
+                </Link>
+              </div>
+            ) : (
+              <Link
+                to="#!"
+                className="cart"
+                onClick={() => addCart(detailProduct)}
+              >
+                Thêm vào giỏ
+              </Link>
+            )}
+          </div>
+          <p>
+            <span>Miêu tả: </span> <br /> {detailProduct.description}
+          </p>
         </div>
       </div>
 
@@ -88,7 +104,8 @@ const ProductDetail = () => {
         <h2 className="title">Sản phẩm liên quan</h2>
         <div className="products">
           {products.map((product) => {
-            return product._id !== detailProduct._id && product.category === detailProduct.category ? (
+            return product._id !== detailProduct._id &&
+              product.category === detailProduct.category ? (
               <ProductItem key={product._id} product={product} />
             ) : null;
           })}

@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
+import { AiOutlineCheck } from 'react-icons/ai'
 import { GlobalState } from "../../GlobalState";
 
 const QnADetails = () => {
@@ -75,7 +76,7 @@ const QnADetails = () => {
             <h5>Vấn đề: {inquiryDetail.subject}</h5> 
             <h5>Câu hỏi: {inquiryDetail.content}</h5> 
             <h5>Giải đáp: </h5>
-            <p>{inquiryDetail.answer == "" ? "Chưa có câu trả lời" : `${inquiryDetail.answer}`}</p>
+            {inquiryDetail.answer == "" ? <p>Chưa có câu trả lời</p> : <><AiOutlineCheck /> <span>{inquiryDetail.answer}</span></>}
             {
               isAdmin ? (<div className="btn">
               <button onClick={onClick}>{inquiryDetail.answer === "" ? "Trả lời" : "Chỉnh sửa"}</button>

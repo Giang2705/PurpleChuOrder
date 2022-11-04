@@ -113,6 +113,7 @@ const OrderDetail = () => {
         </tbody>
       </table>
 
+      <div className="editArea">
       {isEdit ? (
         isAdmin ? (
           <form action="" onSubmit={update} className="editArea">
@@ -140,6 +141,7 @@ const OrderDetail = () => {
           </form>
         )
       ) : null}
+      </div>
 
       <table style={{ margin: "30px auto" }}>
         <thead>

@@ -26,7 +26,7 @@ const Cart = () => {
     };
 
     const makeRequest = async () => {
-      await userRequest.post("/api/payment", {
+      await userRequest.post("api/payment", {
         user_id: userID,
         tokenId: stripeToken.id,
         amount: total,

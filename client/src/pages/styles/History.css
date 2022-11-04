@@ -35,14 +35,37 @@ table a{
     border: 2px solid;
     border-radius: 5px;
     padding: 5px 10px;
-    background-color: rgb(3, 165, 206);
+    background-color: rgb(145, 3, 206);
     color: #ffffff;
+    transition: all 0.5s;
 }
-
+.history-page .btnEdit:hover {
+    opacity: 0.5;
+}
 .history-page .btnEditDisabled {
     background-color: rgb(84, 97, 101);
 }
 
 .editArea {
-    margin: 30px 60px;
+    margin: 30px 80px;
+}
+.editArea label {
+    font-weight: 900;
+    font-size: 20px;
+}
+.editArea input {
+    font-size: 15px;
+}
+.editArea button {
+    margin: 0 10px;
+    border: 1px solid rgb(0, 0, 0);
+    padding: 0 10px;
+    border-radius: 3px;
+    background-color: rgb(145, 3, 206);
+    color: white;
+    transition: all 0.5s;
+    box-shadow: 2px 2px rgb(186, 186, 186);
+}
+.editArea button:hover {
+    opacity: 0.5;
 }

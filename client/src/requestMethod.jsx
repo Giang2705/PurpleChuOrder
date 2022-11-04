@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = "https://purplechu.com/";
+const BASE_URL = "https://purple-chu-order.herokuapp.com";
 
 // const TOKEN =
 //   JSON.parse(JSON.parse(localStorage.getItem("persist:root")).user).currentUser

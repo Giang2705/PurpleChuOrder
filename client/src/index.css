@@ -69,6 +69,9 @@ button {
 /* Contact */
 @import url("./pages/styles/Contact.css");
 
+/* QnA Details */
+@import url("./pages/styles/QnADetails.css");
+
 /* Footer */
 @import url("./components//styles/footer.css");
 
