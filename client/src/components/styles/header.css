@@ -7,7 +7,7 @@ header {
     flex-wrap: wrap;
     justify-content: space-around;
     align-items: center;
-    background-color: #000000;
+    background-color: #ffffff;
     position: sticky;
     top: 0;
     z-index: 100;
@@ -16,9 +16,12 @@ header .logo {
     flex: 1;
 }
 header .logo h1 a{
-    color: #ffffff;
-    font-family: 'Poppins', sans-serif;
+    color: #6255f6;
+    font-family: 'Paytone One', sans-serif;
     font-size: 30px;
+}
+.headerHR {
+    opacity: 0.7;
 }
 header ul li {
     display: inline-block;
@@ -27,9 +30,9 @@ header ul li {
 header ul li a{
     display: inline-block;
     position: relative;
-    color: #ffffff;
+    color: #6255f6;
     font-size: 18px;
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Roboto', cursive;
     transition: all 0.5s;
 }
 header ul li a::after{
@@ -60,7 +63,7 @@ header ul li a:hover {
     margin-right: 20px;
 }
 .cart-icon .cart {
-    color: white;
+    color: rgb(0, 0, 0);
     font-size: 30px;
 }
 

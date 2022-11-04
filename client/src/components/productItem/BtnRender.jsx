@@ -11,13 +11,8 @@ const BtnRender = ({product}) => {
 
   return (
     <div className="row_btn">
-      {
-        isAdmin ? null : <Link id="btn_buy" to="#!" onClick={() => addCart(product)}>
-        Thêm <br /> giỏ hàng
-      </Link>
-      }
       <Link id="btn_view" to={`/detail/${product._id}`}>
-        Xem <br /> chi tiết
+        Xem chi tiết
       </Link>
     </div>
   );

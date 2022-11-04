@@ -14,6 +14,7 @@ import OrderHistory from './orderHistory/OrderHistory'
 import OrderDetail from './orderHistory/OrderDetail'
 import QnA from './QnA/QnA'
 import QnADetails from './QnA/QnADetails'
+import Checkout from './checkout/Checkout'
 
 
 const Homepage = () => {
@@ -26,6 +27,7 @@ const Homepage = () => {
       <Route path="/login" exact element={<Login />}/>
       <Route path="/register" exact element={<Register />}/>
       <Route path="/cart" exact element={<Cart />}/>
+      <Route path="/checkout" exact element={<Checkout />}/>
       <Route path="/contact" exact element={<Contact />}/>
       <Route path='/qna' exact element={<QnA />}/>
       <Route path='/qna/:id' exact element={<QnADetails />}/>

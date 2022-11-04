@@ -71,7 +71,8 @@ const ProductDetail = () => {
             <h5>ID: {detailProduct.product_id}</h5>
           </div>
           <div className="row">
-            <span>Giá: {detailProduct.price} VND</span>
+            <span>Giá: {detailProduct.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
+} VND</span>
             {isAdmin ? (
               <div>
                 <Link to="/products" className="delete" onClick={deleteProduct}>
@@ -94,9 +95,9 @@ const ProductDetail = () => {
               </Link>
             )}
           </div>
-          <p>
-            <span>Miêu tả: </span> <br /> {detailProduct.description}
-          </p>
+          
+          <span>Miêu tả: </span>
+          <p id="detail">{detailProduct.description}</p>
         </div>
       </div>
 

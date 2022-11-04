@@ -25,34 +25,34 @@ const Cart = () => {
       setTotal(total);
     };
 
-    const makeRequest = async () => {
-      await userRequest.post("api/payment", {
-        user_id: userID,
-        tokenId: stripeToken.id,
-        amount: total,
-        name: stripeToken.card.name,
-        email: stripeToken.email,
-        address:
-          stripeToken.card.address_line1 +
-          ", " +
-          stripeToken.card.address_city +
-          ", " +
-          stripeToken.card.address_country,
-        cart: cart,
-      });
-    };
+    // const makeRequest = async () => {
+    //   await userRequest.post("/payment", {
+    //     user_id: userID,
+    //     tokenId: stripeToken.id,
+    //     amount: total,
+    //     name: stripeToken.card.name,
+    //     email: stripeToken.email,
+    //     address:
+    //       stripeToken.card.address_line1 +
+    //       ", " +
+    //       stripeToken.card.address_city +
+    //       ", " +
+    //       stripeToken.card.address_country,
+    //     cart: cart,
+    //   });
+    // };
 
     getTotal();
-    if (cart.length !== 0){
-      stripeToken && makeRequest();
-    }
+    // if (cart.length !== 0){
+    //   stripeToken && makeRequest();
+    // }
 
-    if (cart.length !== 0 && stripeToken !== null){  
-      setCart([]);
-      alert("Thanh toán thành công!");
-    }
+    // if (cart.length !== 0 && stripeToken !== null){  
+    //   setCart([]);
+    //   alert("Thanh toán thành công!");
+    // }
 
-    addToCart();
+    // addToCart();
     setCallback(!callback)
   }, [cart, stripeToken, cart.total, total]);
 
@@ -123,7 +123,8 @@ const Cart = () => {
                 <h2>{product.name}</h2>
                 <h5>ID: {product.product_id}</h5>
               </div>
-              <h3>Giá: {product.price * product.quantity} VND</h3>
+              <h3>Giá: {(product.price * product.quantity).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
+} VND</h3>
               <div className="amount">
                 <button onClick={() => decrement(product._id)}> - </button>
                 <span>{product.quantity}</span>
@@ -142,8 +143,9 @@ const Cart = () => {
       })}
 
       <div className="total">
-        <h3>Total: {total} VND</h3>
-        <StripeCheckout
+        <h3>Tổng cộng: {total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
+} VND</h3>
+        {/* <StripeCheckout
           name="Purple Chu Order"
           billingAddress
           shippingAddress
@@ -154,7 +156,8 @@ const Cart = () => {
           currency="USD"
         >
           <Link>Thanh toán</Link>
-        </StripeCheckout>
+        </StripeCheckout> */}
+        <Link to="/checkout">Thanh toán</Link>
       </div>
     </div>
   );

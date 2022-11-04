@@ -57,7 +57,7 @@ const Header = () => {
 
       <div className="logo">
         <h1>
-          <Link to="/">{isAdmin ? "Admin" : "Purple Chu Order"}</Link>
+          <Link to="/">{isAdmin ? "Admin" : "PURPLE CHU"}</Link>
         </h1>
       </div>
 
