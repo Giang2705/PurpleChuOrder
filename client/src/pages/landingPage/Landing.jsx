@@ -8,7 +8,7 @@ const Landing = () => {
     <>
       <Carousel />
       <ProductsCarousel />
-      <NoticePanel />
+      {/* <NoticePanel /> */}
     </>
   );
 };

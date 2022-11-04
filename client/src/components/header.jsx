@@ -75,9 +75,9 @@ const Header = () => {
             <Link to="/contact">CS Center</Link>
           )}
         </li>
-        <li>
+        {/* <li>
           {isAdmin ? <Link to="/create-product">Thêm sản phẩm</Link> : null}
-        </li>
+        </li> */}
         <li>
           {isAdmin ? (
             <Link to="/history">Đơn đặt hàng</Link>
