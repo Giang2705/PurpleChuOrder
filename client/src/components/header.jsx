@@ -52,7 +52,7 @@ const Header = () => {
   return (
     <header>
       <div onClick={() => setMenu(!menu)}>
-        <AiOutlineMenu width={30} className="menu"/>
+        <AiOutlineMenu width={30} className="menu" />
       </div>
 
       <div className="logo">
@@ -114,13 +114,7 @@ const Header = () => {
           )}
         </li>
 
-        <li onClick={() => setMenu(!menu)}>
-          <AiOutlineClose width="30" className="close" />
-        </li>
-
-        {isAdmin || !isLogged ? (
-          ""
-        ) : (
+        {isAdmin || !isLogged ? null : (
           <li className="cart-icon">
             <span>{cart.length}</span>
             <Link to="/cart">
@@ -128,6 +122,10 @@ const Header = () => {
             </Link>
           </li>
         )}
+
+        <li onClick={() => setMenu(!menu)}>
+          <AiOutlineClose width="30" className="close" />
+        </li>
       </ul>
     </header>
   );

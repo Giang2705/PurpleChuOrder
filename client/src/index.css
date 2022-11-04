@@ -105,6 +105,7 @@ button {
   }
   header ul li a{
     color: black;
+    font-size: 15px;
   }
   header .menu{
     display: block;
