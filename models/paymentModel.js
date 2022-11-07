@@ -13,22 +13,34 @@ const paymentSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    phone: {
+        type: String,
+        required: true,
+    },
     address: {
         type: Object,
         required: true,
     },
-    tokenId: {
-        type: String,
-        required: true,
-        trim: true,
-        unique: true,
-    },   
     cart: {
         type: Array,
         default: [],
     },
     amount: {
         type: Number,
+    },
+    images: [{
+        public_id:{
+            type: String,
+            required: true,
+        },
+        url:{
+            type: String,
+            required: true
+        }
+    }],
+    method: {
+        type: String,
+        required: true
     },
     status: {
         type: String,

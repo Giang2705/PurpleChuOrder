@@ -78,7 +78,7 @@ const OrderDetail = () => {
 
   return (
     <div className="history-page">
-      <table>
+      <table className="userInfo">
         <thead>
           <tr>
             <th>Tên người dùng</th>
@@ -160,7 +160,7 @@ const OrderDetail = () => {
               </td>
               <td>{item.name}</td>
               <td>{item.quantity}</td>
-              <td>{item.price * item.quantity}</td>
+              <td>{(item.price * item.quantity).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}</td>
             </tr>
           ))}
         </tbody>

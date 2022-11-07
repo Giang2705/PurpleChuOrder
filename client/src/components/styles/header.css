@@ -55,7 +55,7 @@ header ul li a:hover {
     opacity: 0.7;
 }
 
-.menu {
+.menu, .close {
     display: none;
 }
 .cart-icon{

@@ -123,9 +123,13 @@ const Header = () => {
           </li>
         )}
 
-        <li onClick={() => setMenu(!menu)}>
-          <AiOutlineClose width="30" className="close" />
-        </li>
+        
+
+      {
+        menu ? <li onClick={() => setMenu(!menu)}>
+        <AiOutlineClose width={30} className="close" />
+      </li> : null
+      }
       </ul>
     </header>
   );

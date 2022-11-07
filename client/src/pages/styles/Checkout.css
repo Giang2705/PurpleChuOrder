@@ -1,0 +1,44 @@
+.info {
+    margin: 30px 80px;
+}
+
+.info table {
+    border: 2px solid #000000;
+    border-collapse: collapse;
+    margin: 0 auto;
+}
+
+.info table img{
+    width: 50%;
+}
+
+.info table .total {
+    justify-content: flex-end;
+}
+
+.info .paymentInfo {
+    font-size: 20px;
+    margin: 30px 50px 0;
+    line-height: 30px;
+    font-weight: 900;
+}
+
+.radio-buttons {
+    margin-top: 20px;
+}
+
+.radio-buttons input[type=radio] {
+    min-height: 10px;
+    width: 50%;
+}
+
+.radio-buttons label {
+    width: 50%;
+    font-weight: 700;
+    font-size: 20px;
+}
+
+.radio-buttons .row {
+    display: flex;
+    justify-content: space-between;
+}

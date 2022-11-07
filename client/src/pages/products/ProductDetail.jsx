@@ -97,7 +97,7 @@ const ProductDetail = () => {
           </div>
           
           <span>Miêu tả: </span>
-          <p id="detail">{detailProduct.description}</p>
+          <p id="description" style={{whiteSpace: "pre-line"}}>{detailProduct.description}</p>
         </div>
       </div>
 
