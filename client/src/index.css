@@ -237,6 +237,64 @@ button {
   .related-products .title {
     font-size: 1rem;
   }
+
+  .info{
+    margin: 20px auto;
+  }
+
+  .info table {
+    width: 80%;
+  }
+
+  .info table img {
+    width: 100%;
+  }
+
+  .info table th, .info table td{
+    font-size: 11px;
+  }
+
+  .info table .total {
+    font-size: 11px;
+    width: 70px;
+    margin-left: 10px;
+  }
+
+  .info .paymentInfo {
+    margin: 0;
+  }
+
+  .info .paymentInfo p {
+    font-size: 12px;
+    line-height: 20px;
+    text-align: justify;
+  }
+
+  .create_product .upload {
+    height: 300px;
+  }
+
+  .create_product .upload #file_img {
+    border: none;
+  }
+  .create_product .upload #file_up::before {
+    font-size: 30px;
+  }
+  .create_product form {
+    font-size: 12px;
+    min-width: 120px;
+  }
+  .create_product form .radio-buttons input {
+    height: 10px;
+  }
+  .create_product form .radio-buttons label {
+    font-size: 12px;
+  }
+
+  .create_product form button {
+    font-size: 12px;
+    width: 150px;
+  }
 }
 
 @media (max-width: 340px) {
@@ -264,4 +322,5 @@ button {
     font-size: 15px;
     padding: 5px 10px;
   }
+
 }

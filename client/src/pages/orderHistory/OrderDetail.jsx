@@ -94,7 +94,7 @@ const OrderDetail = () => {
             <td>{orderDetail.name}</td>
             <td>{orderDetail.address}</td>
             <td>{orderDetail.email}</td>
-            <td>{phone}</td>
+            <td>{orderDetail.phone}</td>
             <td>{orderDetail.status}</td>
             {btnEdit || isAdmin ? (
               <td>
