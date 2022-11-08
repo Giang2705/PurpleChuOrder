@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useContext, useState, useEffect } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import ProductItem from "../../components/productItem/ProductItem";
 import { GlobalState } from "../../GlobalState";
 import ImageSlider from "../../utils/ImageSlider/ImageSlider";
@@ -17,6 +17,8 @@ const ProductDetail = () => {
   const [isAdmin] = state.userAPI.isAdmin;
   const [token] = state.token;
 
+  const navigate = useNavigate();
+
   const deleteProduct = async () => {
     for (let index = 0; index < detailProduct.images.length; index++) {
       imagesList.push(detailProduct.images[index]);
@@ -24,24 +26,28 @@ const ProductDetail = () => {
 
     setImagesList(imagesList);
     try {
-      imagesList.map(async (image) => {
-        const destroyImg = axios.post(
-          "/api/destroy",
-          { public_id: image.public_id },
+      if (window.confirm("Bạn muốn xóa sản phẩm?")) {
+        imagesList.map(async (image) => {
+          const destroyImg = axios.post(
+            "/api/destroy",
+            { public_id: image.public_id },
+            {
+              headers: { Authorization: token },
+            }
+          );
+          await destroyImg;
+        });
+
+        const destroyProduct = axios.delete(
+          `/api/products/${detailProduct._id}`,
           {
             headers: { Authorization: token },
           }
         );
-        await destroyImg;
-      });
+        await destroyProduct;
 
-      const destroyProduct = axios.delete(
-        `/api/products/${detailProduct._id}`,
-        {
-          headers: { Authorization: token },
-        }
-      );
-      await destroyProduct;
+        navigate("/products");
+      }
     } catch (err) {
       alert(err.response.data.msg);
     }
@@ -68,11 +74,18 @@ const ProductDetail = () => {
         <div className="box-detail">
           <div className="row">
             <h2>{detailProduct.name}</h2>
-            <h5>ID: {detailProduct.product_id}</h5>
+            {
+              detailProduct.version !== "" ? <h5>Version: {detailProduct.version}</h5> : null
+            }
           </div>
           <div className="row">
-            <span>Giá: {detailProduct.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
-} VND</span>
+            <span>
+              Giá:{" "}
+              {detailProduct.price
+                .toString()
+                .replace(/\B(?=(\d{3})+(?!\d))/g, ".")}{" "}
+              VND
+            </span>
             {isAdmin ? (
               <div>
                 <Link to="/products" className="delete" onClick={deleteProduct}>
@@ -95,9 +108,11 @@ const ProductDetail = () => {
               </Link>
             )}
           </div>
-          
+
           <span>Miêu tả: </span>
-          <p id="description" style={{whiteSpace: "pre-line"}}>{detailProduct.description}</p>
+          <p id="description" style={{ whiteSpace: "pre-line" }}>
+            {detailProduct.description}
+          </p>
         </div>
       </div>
 

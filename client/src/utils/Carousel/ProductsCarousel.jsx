@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useContext } from "react";
 import { GlobalState } from "../../GlobalState";
 import Carousel from "react-elastic-carousel";
@@ -13,8 +13,8 @@ const breakPoints = [
 const ProductsCarousel = () => {
   const state = useContext(GlobalState);
   const [products] = state.productAPI.products;
-  const [displayedProducts] = useState([]);
-  const [callback, setCallback] = state.productAPI.callback
+  const [displayedProducts, setDisplayedProducts] = useState([]);
+  const [callback, setCallback] = state.userAPI.callback
   let count = 0;
 
   products.map(items => {
@@ -23,6 +23,12 @@ const ProductsCarousel = () => {
       count += 1;
     }
   });
+
+  useEffect(() => {
+    setCallback(!callback)
+  }, [])
+
+ 
 
   return (
     <div className="products-carousel">

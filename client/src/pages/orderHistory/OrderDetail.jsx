@@ -22,6 +22,7 @@ const OrderDetail = () => {
   const getAllHistory = async () => {
     const res = await axios.get("/api/payment")
     setAllHistory(res.data)
+    setCallback(!callback)
   }
 
   const onClick = () => {

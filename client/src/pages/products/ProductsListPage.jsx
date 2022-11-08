@@ -9,6 +9,11 @@ import Loading from "../../utils/Loading/Loading";
 const ProductsListPage = () => {
   const state = useContext(GlobalState);
   const [products, setProducts] = state.productAPI.products;
+  const [callback, setCallback] = state.productAPI.callback;
+
+  useEffect(() => {
+    setCallback(!callback)
+  }, [])
 
   return (
     <>

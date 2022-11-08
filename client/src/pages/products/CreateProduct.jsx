@@ -9,6 +9,7 @@ const initialState = {
   price: 0,
   description: "",
   category: "",
+  version: "",
   _id: "",
 };
 
@@ -20,6 +21,7 @@ const initialImage = {
 const CreateProduct = () => {
   const navigate = useNavigate();
   const state = useContext(GlobalState);
+  const [callback, setCallback] = state.userAPI.callback
   const [product, setProduct] = useState(initialState);
   const [categories] = state.categoryAPI.categories;
   const [image, setImage] = useState(initialImage);
@@ -166,8 +168,9 @@ const CreateProduct = () => {
 
       setImages([]);
       setProduct(initialState);
-      setProducts([...products])
-      navigate('/products')
+      setProducts([...products]);
+      setCallback(!callback)
+      navigate("/products");
     } catch (err) {
       alert(err.response.data.msg);
     }
@@ -261,6 +264,11 @@ const CreateProduct = () => {
               );
             })}
           </select>
+        </div>
+
+        <div className="row">
+          <label htmlFor="verison">Version: </label>
+          <input type="text" value={product.version} name="version" id="version" onChange={handleChangeInput}/>
         </div>
 
         <button type="submit">

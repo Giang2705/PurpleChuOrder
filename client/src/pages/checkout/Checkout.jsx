@@ -3,6 +3,18 @@ import React, { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { GlobalState } from "../../GlobalState";
 
+const methods = [
+  {
+    title: "momo",
+  },
+  {
+    title: "chuyển khoản ngân hàng",
+  },
+  {
+    title: "cod",
+  },
+];
+
 const initialState = {
   user_id: "",
   name: "",
@@ -10,7 +22,7 @@ const initialState = {
   phone: "",
   amount: "",
   address: "",
-  cart: "",
+  cart: [],
   method: "",
 };
 
@@ -55,7 +67,7 @@ const Checkout = () => {
         const res = await axios.post("/api/upload", formData, {
           headers: {
             "content-type": "multipart/form-data",
-            Authorization: token,
+            // Authorization: token,
           },
         });
         const newImage = {
@@ -95,7 +107,7 @@ const Checkout = () => {
         "/api/destroy",
         { public_id: img.public_id },
         {
-          headers: { Authorization: token },
+          // headers: { Authorization: token },
         }
       );
 
@@ -114,7 +126,7 @@ const Checkout = () => {
 
   const handleChangeInput = (e) => {
     const { name, value } = e.target;
-    setPayment({
+    return setPayment({
       ...payment,
       [name]: value,
       amount: total,
@@ -129,13 +141,15 @@ const Checkout = () => {
       if (!images) return alert("No images upload");
 
       if (axios.post("/api/payment", { ...payment, images })) {
+        console.log(payment);
         alert("Created a new payment!");
 
         setCart([]);
         addToCart();
         setImages([]);
         setPayment(initialState);
-        navigate("/");
+        setCallback(!callback);
+        navigate("/history");
       }
     } catch (err) {
       alert(err.response.data.msg);
@@ -162,9 +176,7 @@ const Checkout = () => {
 
     getTotal();
     setCallback(!callback);
-  }, []);
-
-  console.log(cart.length);
+  }, [total]);
 
   return (
     <div>
@@ -181,30 +193,33 @@ const Checkout = () => {
           <tbody>
             {cart.map((item) => {
               return (
-                <>
-                  <tr key={item._id}>
-                    <td>
-                      <img src={item.images[0].url} alt="" />
-                    </td>
-                    <td>{item.name}</td>
-                    <td>{item.quantity}</td>
-                    <td>
-                      {(item.price * item.quantity)
-                        .toString()
-                        .replace(/\B(?=(\d{3})+(?!\d))/g, ".")}
-                    </td>
-                  </tr>
-                </>
+                <tr key={item._id}>
+                  <td>
+                    <img src={item.images[0].url} alt="" />
+                  </td>
+                  <td>{item.name}</td>
+                  <td>{item.quantity}</td>
+                  <td>
+                    {(item.price * item.quantity)
+                      .toString()
+                      .replace(/\B(?=(\d{3})+(?!\d))/g, ".")}
+                  </td>
+                </tr>
               );
             })}
-          </tbody>
 
-          <div className="total">
-            <h3>
-              Tổng cộng:{" "}
-              {total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")} VND
-            </h3>
-          </div>
+            <tr>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td className="total">
+                <h3>
+                  Tổng cộng:{" "}
+                  {total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")} VND
+                </h3>
+              </td>
+            </tr>
+          </tbody>
         </table>
 
         <div className="paymentInfo">
@@ -293,36 +308,21 @@ const Checkout = () => {
             <legend>Hình thức thanh toán: </legend>
 
             <div className="radio-buttons">
-              <div className="row">
-                <label htmlFor="">Momo</label>
-                <input
-                  id="momo"
-                  value="momo"
-                  name="method"
-                  type="radio"
-                  onChange={handleChangeInput}
-                />
-              </div>
-              <div className="row">
-                <label htmlFor="">Chuyển khoản ngân hàng</label>
-                <input
-                  id="bank"
-                  value="bank"
-                  name="method"
-                  type="radio"
-                  onChange={handleChangeInput}
-                />
-              </div>
-              <div className="row">
-                <label htmlFor="">COD</label>
-                <input
-                  id="cod"
-                  value="cod"
-                  name="method"
-                  type="radio"
-                  onChange={handleChangeInput}
-                />
-              </div>
+              {methods.map((method) => {
+                return (
+                  <div className="row" key={method.title}>
+                    <label htmlFor="">{method.title}</label>
+                    <input
+                      id={method.title}
+                      value={method.title}
+                      checked={payment.method === method.title}
+                      name="method"
+                      type="radio"
+                      onChange={handleChangeInput}
+                    />
+                  </div>
+                );
+              })}
             </div>
           </div>
 

@@ -75,9 +75,14 @@ const Header = () => {
             <Link to="/contact">CS Center</Link>
           )}
         </li>
-        {/* <li>
-          {isAdmin ? <Link to="/create-product">Thêm sản phẩm</Link> : null}
-        </li> */}
+
+        {isAdmin ? (
+          <li>
+            {" "}
+            <Link to="/create-product">Thêm sản phẩm</Link>{" "}
+          </li>
+        ) : null}
+
         <li>
           {isAdmin ? (
             <Link to="/history">Đơn đặt hàng</Link>
@@ -123,13 +128,11 @@ const Header = () => {
           </li>
         )}
 
-        
-
-      {
-        menu ? <li onClick={() => setMenu(!menu)}>
-        <AiOutlineClose width={30} className="close" />
-      </li> : null
-      }
+        {menu ? (
+          <li onClick={() => setMenu(!menu)}>
+            <AiOutlineClose width={30} className="close" />
+          </li>
+        ) : null}
       </ul>
     </header>
   );

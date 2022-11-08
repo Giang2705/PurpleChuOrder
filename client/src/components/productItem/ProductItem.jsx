@@ -9,6 +9,9 @@ const ProductItem = ({ product }) => {
 
       <div className="product_box">
         <h2>{product.name}</h2>
+        {
+          <h5>Version: {product.version !== "" ? `${product.version}` : ""} </h5> 
+        }
         <div className="row">
           <span>
             {product.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")} VND

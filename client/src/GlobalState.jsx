@@ -5,6 +5,7 @@ import CategoriesAPI from './apis/CategoriesAPI'
 import axios from 'axios'
 import InquiriesAPI from './apis/InquiriesAPI'
 import NotificationsAPI from './apis/NotificationsAPI'
+import PaymentAPI from './apis/OrdersAPI'
 
 export const GlobalState = createContext()
 
@@ -29,6 +30,7 @@ export const DataProvider = ({children}) => {
         categoryAPI: CategoriesAPI(),
         inquiriesAPI: InquiriesAPI(),
         notiAPI: NotificationsAPI(),
+        paymentAPI: PaymentAPI(),
     }
 
     return (

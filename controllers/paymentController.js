@@ -2,8 +2,55 @@ const stripe = require("stripe")(process.env.STRIPE_KEY);
 const Payments = require("../models/paymentModel");
 const sendmailControllers = require("./sendmailControllers");
 
+// Filter, sorting and paginating
+// class APIfeatures {
+//   constructor(query, queryString) {
+//     this.query = query;
+//     this.queryString = queryString;
+//   }
+//   filtering() {
+//     const queryObject = { ...this.queryString }; //queryString = req.query
+
+//     const excludedFields = ["page", "sort", "limit"];
+//     excludedFields.forEach((el) => delete queryObject[el]);
+
+//     let queryStr = JSON.stringify(queryObject);
+
+//     queryStr = queryStr.replace(
+//       /\b(gte|gt|lt|lte|regex)\b/g,
+//       (match) => "$" + match
+//     );
+
+//     this.query.find(JSON.parse(queryStr));
+
+//     return this;
+//   }
+//   sorting() {
+//     if (this.queryString.sort) {
+//       const sortBy = this.queryString.sort.split(",").join(" ");
+//       this.query = this.query.sort(sortBy);
+//     } else {
+//       this.query = this.query.sort("-createdAt");
+//     }
+
+//     return this;
+//   }
+// }
+
 const paymentController = {
   getPayment: async (req, res) => {
+    // try {
+    //   const features = new APIfeatures(Payments.find(), req.query).filtering().sorting()
+
+    //   const payments = await features.query
+
+    //   res.json({
+    //       status: "success",
+    //       result: payments.length,
+    //       payment: payments
+    //   })
+
+    //   res.json(payments);
     try {
       const payments = await Payments.find();
       res.json(payments);
@@ -14,8 +61,17 @@ const paymentController = {
 
   createPayment: async (req, res) => {
     try {
-      const { user_id, name, email, phone, amount, address, cart, images, method} =
-        req.body;
+      const {
+        user_id,
+        name,
+        email,
+        phone,
+        amount,
+        address,
+        cart,
+        images,
+        method,
+      } = req.body;
       if (!images) return res.status(400).json({ msg: "No image upload" });
 
       const newPayment = new Payments({
