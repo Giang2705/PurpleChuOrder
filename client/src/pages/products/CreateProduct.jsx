@@ -6,11 +6,15 @@ import { useParams, useNavigate } from "react-router-dom";
 const initialState = {
   product_id: "",
   name: "",
-  price: 0,
   description: "",
   category: "",
-  version: "",
   _id: "",
+};
+
+const initialVer = {
+  ver: "",
+  price: 0,
+  checked: false,
 };
 
 const initialImage = {
@@ -21,11 +25,13 @@ const initialImage = {
 const CreateProduct = () => {
   const navigate = useNavigate();
   const state = useContext(GlobalState);
-  const [callback, setCallback] = state.userAPI.callback
+  const [callback, setCallback] = state.userAPI.callback;
   const [product, setProduct] = useState(initialState);
   const [categories] = state.categoryAPI.categories;
   const [image, setImage] = useState(initialImage);
   const [listImages, setListImages] = useState([]);
+
+  const [inputList, setInputList] = useState([initialVer]);
 
   const [images, setImages] = useState([]);
   const [imagesAfterDelete, setImagesAfterDelete] = useState([]);
@@ -55,6 +61,14 @@ const CreateProduct = () => {
       setImages([]);
     }
   }, [param.id, products]);
+
+  const onClickNew = () => {
+    setInputList([...inputList, {
+      ver: "",
+      price: 0,
+      checked: false,
+    }]);
+  };
 
   const upload = () => {
     try {
@@ -133,6 +147,19 @@ const CreateProduct = () => {
     }
   };
 
+  const handleChangeVersion = (e, index) => {
+    const { name, value } = e.target;
+    const list = [...inputList];
+    list[index][name] = value;
+    list.checked = false;
+    setInputList(list);
+  };
+  const handleRemoveVersion = (index) => {
+    const list = [...inputList];
+    list.splice(index, 1);
+    setInputList(list);
+  };
+
   const handleChangeInput = (e) => {
     const { name, value } = e.target;
     return setProduct({ ...product, [name]: value });
@@ -147,7 +174,7 @@ const CreateProduct = () => {
       if (onEdit) {
         await axios.put(
           `/api/products/${product._id}`,
-          { ...product, images },
+          { ...product, version: inputList, images },
           {
             headers: { Authorization: token },
           }
@@ -157,7 +184,7 @@ const CreateProduct = () => {
       } else {
         await axios.post(
           "/api/products",
-          { ...product, images },
+          { ...product, version: inputList, images },
           {
             headers: { Authorization: token },
           }
@@ -167,9 +194,10 @@ const CreateProduct = () => {
       }
 
       setImages([]);
+      setInputList(initialVer);
       setProduct(initialState);
       setProducts([...products]);
-      setCallback(!callback)
+      setCallback(!callback);
       navigate("/products");
     } catch (err) {
       alert(err.response.data.msg);
@@ -223,7 +251,7 @@ const CreateProduct = () => {
           />
         </div>
 
-        <div className="row">
+        {/* <div className="row">
           <label htmlFor="price">Giá sản phẩm: </label>
           <input
             type="number"
@@ -233,7 +261,7 @@ const CreateProduct = () => {
             value={product.price}
             onChange={handleChangeInput}
           />
-        </div>
+        </div> */}
 
         <div className="row">
           <label htmlFor="description">Miêu tả: </label>
@@ -266,10 +294,45 @@ const CreateProduct = () => {
           </select>
         </div>
 
-        <div className="row">
-          <label htmlFor="verison">Version: </label>
-          <input type="text" value={product.version} name="version" id="version" onChange={handleChangeInput}/>
-        </div>
+        {inputList.map((x, i) => {
+          return (
+            <div className="row" key={i}>
+              <div className="">
+                <label htmlFor="verison">Version: </label>
+                <input
+                  type="text"
+                  value={x.ver}
+                  name="ver"
+                  id="ver"
+                  onChange={(e) => handleChangeVersion(e, i)}
+                />
+              </div>
+
+              <div className="">
+                <label htmlFor="price">Giá sản phẩm: </label>
+                <input
+                  type="number"
+                  name="price"
+                  id="price"
+                  required
+                  value={x.price}
+                  onChange={(e) => handleChangeVersion(e, i)}
+                />
+              </div>
+
+              <div className="btn-box">
+                {inputList.length !== 1 && (
+                  <button className="mr10" onClick={() => handleRemoveVersion(i)}>
+                    Remove
+                  </button>
+                )}
+                {inputList.length - 1 === i && (
+                  <button onClick={onClickNew}>Add</button>
+                )}
+              </div>
+            </div>
+          );
+        })}
 
         <button type="submit">
           {onEdit ? "Cập nhật thông tin" : "Thêm sản phẩm"}

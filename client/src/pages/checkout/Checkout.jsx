@@ -34,7 +34,7 @@ const initialImage = {
 const Checkout = () => {
   const state = useContext(GlobalState);
   const [callback, setCallback] = state.userAPI.callback;
-  const [total, setTotal] = useState(0);
+  // const [total, setTotal] = useState(0);
   const [cart, setCart] = state.userAPI.cart;
   const navigate = useNavigate();
   const [image, setImage] = useState(initialImage);
@@ -129,7 +129,7 @@ const Checkout = () => {
     return setPayment({
       ...payment,
       [name]: value,
-      amount: total,
+      amount: getTotal(),
       cart: cart,
       user_id: id,
     });
@@ -138,9 +138,9 @@ const Checkout = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      if (!images) return alert("No images upload");
-
-      if (axios.post("/api/payment", { ...payment, images })) {
+      if (!images) {
+        return alert("No images upload");
+      } else if (axios.post("/api/payment", { ...payment, images })) {
         console.log(payment);
         alert("Created a new payment!");
 
@@ -166,17 +166,25 @@ const Checkout = () => {
     );
   };
 
-  useEffect(() => {
-    const getTotal = () => {
-      const total = cart.reduce((prev, item) => {
-        return prev + item.price * item.quantity;
-      }, 0);
-      setTotal(total);
-    };
+  const getTotal = () => {
+      let total = 0
+      cart.map(item => {
+        total += item.version.price*item.quantity
+      })
+      return total
+  }
 
-    getTotal();
-    setCallback(!callback);
-  }, [total]);
+  // useEffect(() => {
+  //   const getTotal = () => {
+  //     const total = cart.reduce((prev, item) => {
+  //       return prev + item.version.price * item.quantity;
+  //     }, 0);
+  //     setTotal(total);
+  //   };
+
+  //   getTotal();
+  //   setCallback(!callback);
+  // }, [total]);
 
   return (
     <div>
@@ -186,6 +194,7 @@ const Checkout = () => {
             <tr>
               <th></th>
               <th>Sản phẩm</th>
+              <th>Version</th>
               <th>Số lượng</th>
               <th>Tổng cộng</th>
             </tr>
@@ -193,14 +202,15 @@ const Checkout = () => {
           <tbody>
             {cart.map((item) => {
               return (
-                <tr key={item._id}>
+                <tr key={item.version._id}>
                   <td>
                     <img src={item.images[0].url} alt="" />
                   </td>
                   <td>{item.name}</td>
+                  <td>{item.version.ver}</td>
                   <td>{item.quantity}</td>
                   <td>
-                    {(item.price * item.quantity)
+                    {(item.version.price * item.quantity)
                       .toString()
                       .replace(/\B(?=(\d{3})+(?!\d))/g, ".")}
                   </td>
@@ -212,10 +222,11 @@ const Checkout = () => {
               <td></td>
               <td></td>
               <td></td>
+              <td></td>
               <td className="total">
                 <h3>
-                  Tổng cộng:{" "}
-                  {total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")} VND
+                  Tổng cộng: {getTotal().toString()
+                      .replace(/\B(?=(\d{3})+(?!\d))/g, ".")} VND
                 </h3>
               </td>
             </tr>
@@ -234,27 +245,28 @@ const Checkout = () => {
       </div>
 
       <div className="create_product">
-        <div className="upload">
-          <input
-            type="file"
-            name="file"
-            id="file_up"
-            multiple
-            onChange={handleUpload}
-          />
-          <div id="file_img">
-            {images.map((image) => {
-              return (
-                <div id="imgGroup" key={image.public_id}>
-                  <img src={image.url} alt="" />
-                  <span onClick={() => handleDelete(image)}>X</span>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-
         <form action="" onSubmit={handleSubmit}>
+          <div className="upload">
+            <input
+              type="file"
+              name="file"
+              id="file_up"
+              multiple
+              onChange={handleUpload}
+              required
+            />
+            <div id="file_img">
+              {images.map((image) => {
+                return (
+                  <div id="imgGroup" key={image.public_id}>
+                    <img src={image.url} alt="" />
+                    <span onClick={() => handleDelete(image)}>X</span>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
           <div className="row">
             <label htmlFor="name">Tên người dùng </label>
             <input
@@ -319,6 +331,7 @@ const Checkout = () => {
                       name="method"
                       type="radio"
                       onChange={handleChangeInput}
+                      required
                     />
                   </div>
                 );

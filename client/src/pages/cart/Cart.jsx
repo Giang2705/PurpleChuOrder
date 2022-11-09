@@ -20,7 +20,7 @@ const Cart = () => {
   useEffect(() => {
     const getTotal = () => {
       const total = cart.reduce((prev, item) => {
-        return prev + item.price * item.quantity;
+        return prev + item.version.price * item.quantity;
       }, 0);
       setTotal(total);
     };
@@ -114,16 +114,16 @@ const Cart = () => {
     <div className="cart_container">
       {cart.map((product) => {
         return (
-          <div key={product._id} className="detail cart">
+          <div key={product.version._id} className="detail cart">
             <div className="slider img">
               <ImageSlider slides={product.images} />
             </div>
             <div className="box-detail inCart">
               <div className="row">
                 <h2>{product.name}</h2>
-                <h5>ID: {product.product_id}</h5>
+                <h5>Version: {product.version.ver}</h5>
               </div>
-              <h3>Giá: {(product.price * product.quantity).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
+              <h3>Giá: {(product.version.price * product.quantity).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
 } VND</h3>
               <div className="amount">
                 <button onClick={() => decrement(product._id)}> - </button>

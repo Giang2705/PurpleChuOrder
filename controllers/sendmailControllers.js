@@ -161,12 +161,14 @@ const sendmailControllers = {
                             border-collapse: collapse;
                             text-align: center;
                             padding: 10px;
-                            text-transform: capitalize;">${item.price * item.quantity}</td>
+                            text-transform: capitalize;">${(item.version.price * item.quantity).toString()
+                              .replace(/\B(?=(\d{3})+(?!\d))/g, ".")}</td>
                   </tr>`
                 )}
               </tbody>
             </table>
-            <h3>Tổng cộng: ${total} VND</h3>
+            <h3>Tổng cộng: ${total.toString()
+              .replace(/\B(?=(\d{3})+(?!\d))/g, ".")} VND</h3>
           </div>`
     };
 

@@ -8,10 +8,10 @@ const OrderDetail = () => {
   const state = useContext(GlobalState);
   const [callback, setCallback] = state.userAPI.callback;
   const [history] = state.userAPI.history;
-  const [allHistory, setAllHistory] = useState([])
+  const [allHistory, setAllHistory] = useState([]);
   const [orderDetail, setOrderDetail] = useState([]);
   const [btnEdit, setBtnEdit] = useState(false);
-  const [phone] = state.userAPI.phone;
+  const [total, setTotal] = useState(0);
   const [isEdit, setIsEdit] = useState(false);
   const [address, setAddress] = useState("");
   const [status, setStatus] = useState("");
@@ -19,11 +19,12 @@ const OrderDetail = () => {
 
   const params = useParams();
 
+  
   const getAllHistory = async () => {
-    const res = await axios.get("/api/payment")
-    setAllHistory(res.data)
-    setCallback(!callback)
-  }
+    const res = await axios.get("/api/payment");
+    setAllHistory(res.data);
+    setCallback(!callback);
+  };
 
   const onClick = () => {
     setAddress(orderDetail.address);
@@ -50,16 +51,18 @@ const OrderDetail = () => {
       alert(err.response.data.msg);
     }
   };
-  
-      getAllHistory()
+
+  getAllHistory();
 
   useEffect(() => {
-      if(isAdmin) {
-        allHistory.forEach((item) => {
-          if(item._id === params.id) setOrderDetail(item);
-        });
-      }
-  }, [allHistory])
+    if (isAdmin) {
+      allHistory.forEach((item) => {
+        if (item._id === params.id) setOrderDetail(item);
+      });
+    }
+
+    setCallback(!callback);
+  }, [allHistory]);
 
   useEffect(() => {
     if (params.id) {
@@ -68,6 +71,7 @@ const OrderDetail = () => {
       });
     }
   }, [params.id, history]);
+
 
   useEffect(() => {
     if (orderDetail.status === "Đang xử lý") {
@@ -115,33 +119,33 @@ const OrderDetail = () => {
       </table>
 
       <div className="editArea">
-      {isEdit ? (
-        isAdmin ? (
-          <form action="" onSubmit={update} className="editArea">
-            <label htmlFor="status">Trạng thái: </label>
-            <input
-              type="text"
-              name="status"
-              value={status}
-              onChange={(e) => setStatus(e.target.value)}
-            />
+        {isEdit ? (
+          isAdmin ? (
+            <form action="" onSubmit={update} className="editArea">
+              <label htmlFor="status">Trạng thái: </label>
+              <input
+                type="text"
+                name="status"
+                value={status}
+                onChange={(e) => setStatus(e.target.value)}
+              />
 
-            <button type="submit">Update</button>
-          </form>
-        ) : (
-          <form action="" onSubmit={update} className="editArea">
-            <label htmlFor="address">Địa chỉ: </label>
-            <input
-              type="text"
-              name="address"
-              value={address}
-              onChange={(e) => setAddress(e.target.value)}
-            />
+              <button type="submit">Update</button>
+            </form>
+          ) : (
+            <form action="" onSubmit={update} className="editArea">
+              <label htmlFor="address">Địa chỉ: </label>
+              <input
+                type="text"
+                name="address"
+                value={address}
+                onChange={(e) => setAddress(e.target.value)}
+              />
 
-            <button type="submit">Update</button>
-          </form>
-        )
-      ) : null}
+              <button type="submit">Update</button>
+            </form>
+          )
+        ) : null}
       </div>
 
       <table style={{ margin: "30px auto" }}>
@@ -149,23 +153,33 @@ const OrderDetail = () => {
           <tr>
             <th></th>
             <th>Sản phẩm</th>
+            <th>Version</th>
             <th>Số lượng</th>
             <th>Tổng cộng</th>
           </tr>
         </thead>
         <tbody>
           {orderDetail.cart.map((item) => (
-            <tr key={item._id}>
+            <tr key={item.version._id}>
               <td>
                 <img src={item.images[0].url} alt="" />
               </td>
               <td>{item.name}</td>
+              <td>{item.version.ver}</td>
               <td>{item.quantity}</td>
-              <td>{(item.price * item.quantity).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}</td>
+              <td>
+                {(item.version.price * item.quantity)
+                  .toString()
+                  .replace(/\B(?=(\d{3})+(?!\d))/g, ".")}
+              </td>
             </tr>
           ))}
         </tbody>
       </table>
+      <h4>
+        Tổng cộng: {orderDetail.amount.toString()
+                  .replace(/\B(?=(\d{3})+(?!\d))/g, ".")}
+      </h4>
     </div>
   );
 };

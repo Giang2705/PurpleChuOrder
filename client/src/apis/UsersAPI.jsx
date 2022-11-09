@@ -5,6 +5,7 @@ const UsersAPI = (token) => {
     const [isLogged, setIsLogged] = useState(false)
     const [isAdmin, setIsAdmin] = useState(false)
     const [cart, setCart] = useState([])
+    const [version, setVersion] = useState([])
     const [userID, setUserID] = useState();
     const [name, setName] = useState();
     const [email, setEmail] = useState();
@@ -60,17 +61,20 @@ const UsersAPI = (token) => {
         }
     }, [token, callback])
 
-    const addCart = async (product) => {
+    const addCart = async (product, version) => {
         if(!isLogged) return alert("Đăng nhập để tiếp tục mua hàng")
 
+        if(version.ver === undefined) return alert("Hãy chọn một version để mua hàng")
+
         const check = cart.every(item => {
-            return item._id !== product._id
+            return (item._id !== product._id || item.version !== version)
         })
 
         if(check) {
-            setCart([...cart, {...product, quantity: 1}])
+            setVersion(version)
+            setCart([...cart, {...product, version: version, quantity: 1}])
 
-            await axios.patch('/user/addcart', {cart: [...cart, {...product, quantity: 1}]}, {
+            await axios.patch('/user/addcart', {cart: [...cart, {...product, version: version, quantity: 1}]}, {
                 headers: {Authorization: token}
             })
         } else {

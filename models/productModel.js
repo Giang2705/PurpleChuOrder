@@ -12,11 +12,11 @@ const productSchema = new mongoose.Schema({
         trim: true,
         required: true,
     },
-    price: {
-        type: Number,
-        trim: true,
-        required: true,
-    },
+    // price: {
+    //     type: Number,
+    //     trim: true,
+    //     required: true,
+    // },
     description: {
         type: String,
         required: true,
@@ -35,10 +35,22 @@ const productSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    version: {
-        type: String,
-        default: "",
-    },
+    version: [{
+        ver: {
+            type: String,
+            default: "",
+        },
+        price: {
+            type: Number,
+            trim: true,
+            required: true,
+        },
+        checked: {
+            type: Boolean,
+            default: false,
+        }
+    }],
+
     checked: {
         type: Boolean,
         default: false,

@@ -11,6 +11,9 @@ const ProductDetail = () => {
   const [products] = state.productAPI.products;
   const [detailProduct, setDetailProduct] = useState([]);
   const [imagesList, setImagesList] = useState([]);
+  const [price, setPrice] = useState(0)
+  const [selectedVersion, setSelectedVersion] = useState("")
+  const [version, setVersion] = useState([])
 
   const addCart = state.userAPI.addCart;
 
@@ -18,6 +21,16 @@ const ProductDetail = () => {
   const [token] = state.token;
 
   const navigate = useNavigate();
+
+  const handleSelect = e => {
+    detailProduct.version.map(item => {
+      if (item.ver === e.target.value) {
+        setPrice(item.price)
+        setVersion(item)
+      }
+    })
+    setSelectedVersion(e.target.value);
+  }
 
   const deleteProduct = async () => {
     for (let index = 0; index < detailProduct.images.length; index++) {
@@ -59,6 +72,7 @@ const ProductDetail = () => {
         if (product._id === params.id) setDetailProduct(product);
       });
     }
+
   }, [params.id, products]);
 
   if (detailProduct.length === 0) return null;
@@ -74,17 +88,31 @@ const ProductDetail = () => {
         <div className="box-detail">
           <div className="row">
             <h2>{detailProduct.name}</h2>
-            {
-              detailProduct.version !== "" ? <h5>Version: {detailProduct.version}</h5> : null
-            }
+            {detailProduct.version.length !== 0 ? (
+              <div>
+                <h5>Version: </h5>
+                <select value={selectedVersion} onChange={handleSelect}>
+                  <option value="default">Chọn version</option>
+                  {detailProduct.version.map((item) => {
+                    return (
+                      <option value={item.ver} key={item.ver}>
+                        {item.ver}
+                      </option>
+                    );
+                  })}
+                </select>
+              </div>
+            ) : detailProduct.version[0].ver !== "default" ? (
+              <h5>Version: {detailProduct.version[0].ver}</h5>
+            ) : null}
           </div>
           <div className="row">
             <span>
-              Giá:{" "}
-              {detailProduct.price
-                .toString()
-                .replace(/\B(?=(\d{3})+(?!\d))/g, ".")}{" "}
-              VND
+              Giá: {selectedVersion !== "" && selectedVersion !== "default" ? price
+              .toString()
+              .replace(/\B(?=(\d{3})+(?!\d))/g, ".") : `${detailProduct.version[0].price.toString()
+                .replace(/\B(?=(\d{3})+(?!\d))/g, ".")} - ${detailProduct.version[detailProduct.version.length - 1].price.toString()
+                  .replace(/\B(?=(\d{3})+(?!\d))/g, ".")}` } VND
             </span>
             {isAdmin ? (
               <div>
@@ -102,7 +130,7 @@ const ProductDetail = () => {
               <Link
                 to="#!"
                 className="cart"
-                onClick={() => addCart(detailProduct)}
+                onClick={() => addCart(detailProduct, version)}
               >
                 Thêm vào giỏ
               </Link>

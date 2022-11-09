@@ -58,6 +58,7 @@ const OrderHistory = () => {
                 <tr>
                   <th>ID</th>
                   <th>Ngày khởi tạo</th>
+                  <th>Tổng cộng</th>
                   <th></th>
                 </tr>
               </thead>
@@ -66,6 +67,8 @@ const OrderHistory = () => {
                   <tr key={items._id}>
                     <td>{items._id}</td>
                     <td>{new Date(items.createdAt).toLocaleDateString()}</td>
+                    <td>{items.amount.toString()
+                  .replace(/\B(?=(\d{3})+(?!\d))/g, ".")}</td>
                     <td>
                       <Link to={`/history/${items._id}`}>View</Link>
                     </td>

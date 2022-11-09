@@ -222,9 +222,9 @@ button {
   .box-detail p {
     font-size: 13px;
   }
-  .box-detail h5 {
+  /* .box-detail h5 {
     display: none;
-  }
+  } */
   .box-detail .cart {
     padding: 10px;
     font-size: 8px;
