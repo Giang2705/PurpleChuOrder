@@ -29,6 +29,7 @@
     color: #7d7c81;
 }
 .product_card .product_box span{
+    width: 50%;
     font-size: 18px;
     font-weight: 900;
     color: #6255f6;
@@ -48,11 +49,10 @@
     display: flex;
     justify-content: space-between;
 }
-.row_btn a{
+.row_btn {
     width: 50%;
     text-align: center;
     color: rgb(133, 82, 145);
-    font-size: 17px;
     font-weight: 600;
     transition: all 0.5s;
 }
