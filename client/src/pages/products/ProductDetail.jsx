@@ -88,7 +88,7 @@ const ProductDetail = () => {
         <div className="box-detail">
           <div className="row">
             <h2>{detailProduct.name}</h2>
-            {detailProduct.version.length !== 0 ? (
+            {(detailProduct.version.length >= 1 && detailProduct.version[0].ver !== "") ? (
               <div>
                 <h5>Version: </h5>
                 <select value={selectedVersion} onChange={handleSelect}>
@@ -102,14 +102,13 @@ const ProductDetail = () => {
                   })}
                 </select>
               </div>
-            ) : detailProduct.version[0].ver !== "default" ? (
-              <h5>Version: {detailProduct.version[0].ver}</h5>
             ) : null}
           </div>
           <div className="row">
             <span>
               Giá: {selectedVersion !== "" && selectedVersion !== "default" ? price
               .toString()
+              .replace(/\B(?=(\d{3})+(?!\d))/g, ".") : (detailProduct.version[0].ver === "") ? detailProduct.version[0].price.toString()
               .replace(/\B(?=(\d{3})+(?!\d))/g, ".") : `${detailProduct.version[0].price.toString()
                 .replace(/\B(?=(\d{3})+(?!\d))/g, ".")} - ${detailProduct.version[detailProduct.version.length - 1].price.toString()
                   .replace(/\B(?=(\d{3})+(?!\d))/g, ".")}` } VND
@@ -130,7 +129,7 @@ const ProductDetail = () => {
               <Link
                 to="#!"
                 className="cart"
-                onClick={() => addCart(detailProduct, version)}
+                onClick={() => {detailProduct.version[0].ver === "" ? addCart(detailProduct, detailProduct.version[0]) : addCart(detailProduct, version) }}
               >
                 Thêm vào giỏ
               </Link>
