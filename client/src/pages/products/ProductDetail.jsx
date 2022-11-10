@@ -27,6 +27,8 @@ const ProductDetail = () => {
       if (item.ver === e.target.value) {
         setPrice(item.price)
         setVersion(item)
+      } else if (e.target.value === "default") {
+        setVersion([])
       }
     })
     setSelectedVersion(e.target.value);

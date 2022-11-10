@@ -64,7 +64,7 @@ const UsersAPI = (token) => {
     const addCart = async (product, version) => {
         if(!isLogged) return alert("Đăng nhập để tiếp tục mua hàng")
 
-        if (version.length > 1) {
+        if (version.ver !== "") {
             if(version.ver === undefined) return alert("Hãy chọn một version để mua hàng")
         }
 
