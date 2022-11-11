@@ -33,7 +33,7 @@ const initialImage = {
 
 const Checkout = () => {
   const state = useContext(GlobalState);
-  const [callback, setCallback] = state.productAPI.callback;
+  const [callback, setCallback] = state.userAPI.callback;
   const [products] = state.productAPI.products;
   const [cart, setCart] = state.userAPI.cart;
   const navigate = useNavigate();
@@ -151,6 +151,7 @@ const Checkout = () => {
         );
       }
     });
+    setCallback(!callback)
   };
 
   const handleSubmit = async (e) => {
@@ -168,7 +169,17 @@ const Checkout = () => {
         alert(
           "Bạn vui lòng chọn dưới 5 sản phẩm lucky box khi thanh toán bằng hình thức COD"
         );
-      } else if (axios.post("/api/payment", { ...payment, images })) {
+      } else if (
+        products.map(item => {
+          cart.find(ele => {
+            return (ele._id === item._id && ele.slot > item.slot)
+          })
+        })
+      ) {
+        alert("Sản phẩm trong giỏ đã hết!")
+      }
+      
+      else if (axios.post("/api/payment", { ...payment, images })) {
         alert("Thanh toán thành công!");
 
         handleSlot();
