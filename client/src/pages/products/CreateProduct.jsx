@@ -9,6 +9,7 @@ const initialState = {
   description: "",
   category: "",
   _id: "",
+  slot: "",
 };
 
 const initialVer = {
@@ -128,7 +129,7 @@ const CreateProduct = () => {
       }
       await axios.post(
         "/api/destroy",
-        { public_id: img.public_id },
+        { public_id: img.public_id, url: img.url },
         {
           headers: { Authorization: token },
         }
@@ -251,18 +252,6 @@ const CreateProduct = () => {
           />
         </div>
 
-        {/* <div className="row">
-          <label htmlFor="price">Giá sản phẩm: </label>
-          <input
-            type="number"
-            name="price"
-            id="price"
-            required
-            value={product.price}
-            onChange={handleChangeInput}
-          />
-        </div> */}
-
         <div className="row">
           <label htmlFor="description">Miêu tả: </label>
           <textarea
@@ -292,6 +281,17 @@ const CreateProduct = () => {
               );
             })}
           </select>
+        </div>
+
+        <div className="row">
+          <label htmlFor="slot">Số lượng sản phẩm: </label>
+          <input
+            type="number"
+            name="slot"
+            id="slot"
+            value={product.slot}
+            onChange={handleChangeInput}
+          />
         </div>
 
         {inputList.map((x, i) => {

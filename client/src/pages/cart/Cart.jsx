@@ -66,10 +66,25 @@ const Cart = () => {
     );
   };
 
+  const updateProduct = async (item) => {
+      await axios.put(
+        `/api/products/${item._id}`,
+        { ...item},
+        {
+          headers: { Authorization: token },
+        }
+      );
+  }
+ 
   const increment = (id) => {
     cart.forEach((item) => {
-      if (item._id === id) {
+      console.log(item.slot);
+      console.log(id)
+      console.log(item._id);
+      if (item._id === id && (item.slot > item.quantity || item.slot === null) ) {
         item.quantity += 1;
+      } else if (item._id === id ) {
+        alert("Sản phẩm chỉ còn " + item.slot + " slot!")
       }
     });
 
@@ -79,8 +94,15 @@ const Cart = () => {
 
   const decrement = (id) => {
     cart.forEach((item) => {
+      console.log(item.slot);
+      console.log(id)
+      console.log(item._id);
       if (item._id === id) {
-        item.quantity === 1 ? (item.quantity = 1) : (item.quantity -= 1);
+        if (item.quantity === 1) {
+          removeProduct(id) 
+        } else {
+          item.quantity -= 1;
+        };
       }
     });
 
@@ -91,7 +113,7 @@ const Cart = () => {
   const removeProduct = (id) => {
     if (window.confirm("Bạn muốn xóa sản phẩm khỏi giỏ hàng?")) {
       cart.forEach((item, index) => {
-        if (item._id === id) {
+        if (item._id === id && item.slot !== null) {
           cart.splice(index, 1);
         }
       });

@@ -63,6 +63,22 @@ const UsersAPI = (token) => {
 
     const addCart = async (product, version) => {
         if(!isLogged) return alert("Đăng nhập để tiếp tục mua hàng")
+        
+        const eventStartedDate = new Date('12 November 2022 20:30 UTC+0700');
+        const eventEndDate = new Date('13 November 2022 00:00 UTC+0700');
+
+        const currentDate = new Date()
+
+        if (product.name.toLowerCase().includes("lucky box")) {
+            if (currentDate.getTime() < eventStartedDate.getTime()) return alert("Hiện tại lucky box chưa tới giờ mở bán. Vui lòng quay lại vào " + eventStartedDate)
+
+            else if (currentDate.getTime() > eventEndDate.getTime())
+            return alert("Đã hết giờ nhận mở bán lucky box. Hẹn bạn vào đợt lucky box sau nha. Cám ơn bạn đã quan tâm!")
+        }
+
+        if(product.slot <= 0 && product.slot !== null) {
+            return alert ("Sản phẩm đã hết!")
+        }
 
         if (version.ver !== "") {
             if(version.ver === undefined) return alert("Hãy chọn một version để mua hàng")

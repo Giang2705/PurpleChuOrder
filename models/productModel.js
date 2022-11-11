@@ -12,11 +12,10 @@ const productSchema = new mongoose.Schema({
         trim: true,
         required: true,
     },
-    // price: {
-    //     type: Number,
-    //     trim: true,
-    //     required: true,
-    // },
+    slot: {
+        type: Number,
+        default: null,
+    },
     description: {
         type: String,
         required: true,

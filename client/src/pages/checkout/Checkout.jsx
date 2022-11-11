@@ -34,11 +34,12 @@ const initialImage = {
 const Checkout = () => {
   const state = useContext(GlobalState);
   const [callback, setCallback] = state.userAPI.callback;
-  // const [total, setTotal] = useState(0);
+  const [products] = state.productAPI.products;
   const [cart, setCart] = state.userAPI.cart;
   const navigate = useNavigate();
   const [image, setImage] = useState(initialImage);
   const [listImages, setListImages] = useState([]);
+  const [slot, setSlot] = useState(0);
 
   const [images, setImages] = useState([]);
   const [imagesAfterDelete, setImagesAfterDelete] = useState([]);
@@ -105,20 +106,23 @@ const Checkout = () => {
       }
       await axios.post(
         "/api/destroy",
-        { public_id: img.public_id },
+        { public_id: img.public_id, url: img.url },
         {
           // headers: { Authorization: token },
         }
       );
 
       images.splice(i, 1);
+      listImages.splice(i,1);
 
       for (let index = 0; index < images.length; index++) {
         imagesAfterDelete.push(images[index]);
       }
 
       setImages(imagesAfterDelete);
+      setListImages(listImages);
       setImagesAfterDelete([]);
+      setCallback(!callback)
     } catch (err) {
       alert(err.response.data.msg);
     }
@@ -135,15 +139,44 @@ const Checkout = () => {
     });
   };
 
+  const handleSlot = () => {
+    cart.every(async (item, err) => {
+      if (item.slot !== null) {
+        await axios.put(
+          `/api/products/${item._id}`,
+          { ...item, slot: item.slot - item.quantity },
+          {
+            headers: { Authorization: token },
+          }
+        );
+      }
+    });
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      if (!images) {
-        return alert("No images upload");
+      cart.map(item => {
+        console.log(item._id)
+        for (let index = 0; index < products.length; index++) {
+          if(item._id === products[index]._id && products[index].slot < item.slot) {
+            return alert("Sản phẩm trong giỏ đã hết!")
+          }
+        }
+      })
+      if (images.length === 0 && payment.method !== 'cod') {
+        return alert("Hãy up bill thanh toán!");
+      } else if (cart.every(item => {
+        if (item.name.toLowerCase().includes('lucky box')){
+          console.log(item.quantity > 5 && payment.method === 'cod');
+          return item.quantity > 5 && payment.method === 'cod';
+        }
+      })) {
+        alert("Bạn vui lòng chọn dưới 5 sản phẩm lucky box khi thanh toán bằng hình thức COD")
       } else if (axios.post("/api/payment", { ...payment, images })) {
-        console.log(payment);
-        alert("Created a new payment!");
+        alert("Thanh toán thành công!");
 
+        handleSlot();
         setCart([]);
         addToCart();
         setImages([]);
@@ -167,12 +200,12 @@ const Checkout = () => {
   };
 
   const getTotal = () => {
-      let total = 0
-      cart.map(item => {
-        total += item.version.price*item.quantity
-      })
-      return total
-  }
+    let total = 0;
+    cart.map((item) => {
+      total += item.version.price * item.quantity;
+    });
+    return total;
+  };
 
   // useEffect(() => {
   //   const getTotal = () => {
@@ -225,8 +258,11 @@ const Checkout = () => {
               <td></td>
               <td className="total">
                 <h3>
-                  Tổng cộng: {getTotal().toString()
-                      .replace(/\B(?=(\d{3})+(?!\d))/g, ".")} VND
+                  Tổng cộng:{" "}
+                  {getTotal()
+                    .toString()
+                    .replace(/\B(?=(\d{3})+(?!\d))/g, ".")}{" "}
+                  VND
                 </h3>
               </td>
             </tr>
@@ -253,7 +289,6 @@ const Checkout = () => {
               id="file_up"
               multiple
               onChange={handleUpload}
-              required
             />
             <div id="file_img">
               {images.map((image) => {

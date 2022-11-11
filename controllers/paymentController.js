@@ -61,6 +61,7 @@ const paymentController = {
 
   createPayment: async (req, res) => {
     try {
+
       const {
         user_id,
         name,
@@ -72,7 +73,8 @@ const paymentController = {
         images,
         method,
       } = req.body;
-      if (!images) return res.status(400).json({ msg: "No image upload" });
+
+      if (method !== "cod" && images.length === 0) return res.status(400).json({ msg: "Hãy up bill thanh toán" });
 
       const newPayment = new Payments({
         user_id,
@@ -84,7 +86,7 @@ const paymentController = {
         address,
         cart,
         method,
-      });
+      }); 
 
       await newPayment.save();
 
