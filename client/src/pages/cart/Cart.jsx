@@ -78,9 +78,6 @@ const Cart = () => {
  
   const increment = (id) => {
     cart.forEach((item) => {
-      console.log(item.slot);
-      console.log(id)
-      console.log(item._id);
       if (item._id === id && (item.slot > item.quantity || item.slot === null) ) {
         item.quantity += 1;
       } else if (item._id === id ) {
@@ -94,9 +91,6 @@ const Cart = () => {
 
   const decrement = (id) => {
     cart.forEach((item) => {
-      console.log(item.slot);
-      console.log(id)
-      console.log(item._id);
       if (item._id === id) {
         if (item.quantity === 1) {
           removeProduct(id) 
@@ -113,7 +107,7 @@ const Cart = () => {
   const removeProduct = (id) => {
     if (window.confirm("Bạn muốn xóa sản phẩm khỏi giỏ hàng?")) {
       cart.forEach((item, index) => {
-        if (item._id === id && item.slot !== null) {
+        if (item._id === id) {
           cart.splice(index, 1);
         }
       });

@@ -157,7 +157,6 @@ const Checkout = () => {
     e.preventDefault();
     try {
       cart.map(item => {
-        console.log(item._id)
         for (let index = 0; index < products.length; index++) {
           if(item._id === products[index]._id && products[index].slot < item.slot) {
             return alert("Sản phẩm trong giỏ đã hết!")
@@ -168,7 +167,6 @@ const Checkout = () => {
         return alert("Hãy up bill thanh toán!");
       } else if (cart.every(item => {
         if (item.name.toLowerCase().includes('lucky box')){
-          console.log(item.quantity > 5 && payment.method === 'cod');
           return item.quantity > 5 && payment.method === 'cod';
         }
       })) {
