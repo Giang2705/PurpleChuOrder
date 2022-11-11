@@ -76,11 +76,11 @@ const Cart = () => {
       );
   }
  
-  const increment = (id) => {
+  const increment = (id, version) => {
     cart.forEach((item) => {
-      if (item._id === id && (item.slot > item.quantity || item.slot === null) ) {
+      if (item._id === id && item.version.ver === version && (item.slot > item.quantity || item.slot === null) ) {
         item.quantity += 1;
-      } else if (item._id === id ) {
+      } else if (item._id === id && item.version.ver === version) {
         alert("Sản phẩm chỉ còn " + item.slot + " slot!")
       }
     });
@@ -89,11 +89,11 @@ const Cart = () => {
     addToCart();
   };
 
-  const decrement = (id) => {
+  const decrement = (id, version) => {
     cart.forEach((item) => {
-      if (item._id === id) {
+      if (item._id === id && item.version.ver === version) {
         if (item.quantity === 1) {
-          removeProduct(id) 
+          removeProduct(id, version) 
         } else {
           item.quantity -= 1;
         };
@@ -104,10 +104,10 @@ const Cart = () => {
     addToCart();
   };
 
-  const removeProduct = (id) => {
+  const removeProduct = (id, version) => {
     if (window.confirm("Bạn muốn xóa sản phẩm khỏi giỏ hàng?")) {
       cart.forEach((item, index) => {
-        if (item._id === id) {
+        if (item._id === id && item.version.ver === version) {
           cart.splice(index, 1);
         }
       });
@@ -142,13 +142,13 @@ const Cart = () => {
               <h3>Giá: {(product.version.price * product.quantity).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
 } VND</h3>
               <div className="amount">
-                <button onClick={() => decrement(product._id)}> - </button>
+                <button onClick={() => decrement(product._id, product.version.ver)}> - </button>
                 <span>{product.quantity}</span>
-                <button onClick={() => increment(product._id)}> + </button>
+                <button onClick={() => increment(product._id, product.version.ver)}> + </button>
               </div>
 
               <div
-                onClick={() => removeProduct(product._id)}
+                onClick={() => removeProduct(product._id, product.version.ver)}
                 className="deleteCart"
               >
                 X

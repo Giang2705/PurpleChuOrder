@@ -75,6 +75,7 @@ const paymentController = {
       } = req.body;
 
       if (method !== "cod" && images.length === 0) return res.status(400).json({ msg: "Hãy up bill thanh toán" });
+      
 
       const newPayment = new Payments({
         user_id,

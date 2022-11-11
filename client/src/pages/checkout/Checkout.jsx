@@ -33,7 +33,7 @@ const initialImage = {
 
 const Checkout = () => {
   const state = useContext(GlobalState);
-  const [callback, setCallback] = state.userAPI.callback;
+  const [callback, setCallback] = state.productAPI.callback;
   const [products] = state.productAPI.products;
   const [cart, setCart] = state.userAPI.cart;
   const navigate = useNavigate();
@@ -113,7 +113,7 @@ const Checkout = () => {
       );
 
       images.splice(i, 1);
-      listImages.splice(i,1);
+      listImages.splice(i, 1);
 
       for (let index = 0; index < images.length; index++) {
         imagesAfterDelete.push(images[index]);
@@ -122,7 +122,7 @@ const Checkout = () => {
       setImages(imagesAfterDelete);
       setListImages(listImages);
       setImagesAfterDelete([]);
-      setCallback(!callback)
+      setCallback(!callback);
     } catch (err) {
       alert(err.response.data.msg);
     }
@@ -144,7 +144,7 @@ const Checkout = () => {
       if (item.slot !== null) {
         await axios.put(
           `/api/products/${item._id}`,
-          { ...item, slot: item.slot - item.quantity },
+          { ...item, slot: item.slot - item.quantity},
           {
             headers: { Authorization: token },
           }
@@ -156,21 +156,18 @@ const Checkout = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      cart.map(item => {
-        for (let index = 0; index < products.length; index++) {
-          if(item._id === products[index]._id && products[index].slot < item.slot) {
-            return alert("Sản phẩm trong giỏ đã hết!")
-          }
-        }
-      })
-      if (images.length === 0 && payment.method !== 'cod') {
+      if (images.length === 0 && payment.method !== "cod") {
         return alert("Hãy up bill thanh toán!");
-      } else if (cart.every(item => {
-        if (item.name.toLowerCase().includes('lucky box')){
-          return item.quantity > 5 && payment.method === 'cod';
-        }
-      })) {
-        alert("Bạn vui lòng chọn dưới 5 sản phẩm lucky box khi thanh toán bằng hình thức COD")
+      } else if (
+        cart.every((item) => {
+          if (item.name.toLowerCase().includes("lucky box")) {
+            return item.quantity > 5 && payment.method === "cod";
+          }
+        })
+      ) {
+        alert(
+          "Bạn vui lòng chọn dưới 5 sản phẩm lucky box khi thanh toán bằng hình thức COD"
+        );
       } else if (axios.post("/api/payment", { ...payment, images })) {
         alert("Thanh toán thành công!");
 
