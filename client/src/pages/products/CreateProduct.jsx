@@ -54,6 +54,7 @@ const CreateProduct = () => {
         if (product._id === param.id) {
           setProduct(product);
           setImages(product.images);
+          setInputList(product.version);
         }
       });
     } else {
