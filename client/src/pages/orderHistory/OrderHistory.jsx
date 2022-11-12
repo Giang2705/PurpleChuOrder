@@ -14,6 +14,26 @@ const OrderHistory = () => {
     setAllHistory(res.data);
   };
 
+  const getTotal = () => {
+    let total = 0
+    allHistory.map(item => {
+      total += item.amount
+    })
+    return total;
+  }
+
+  const getQuantity = () => {
+    let quantity = 0
+    allHistory.map(item => {
+      {item.cart.map((product) => {
+        if (product.name.toLowerCase().includes("lucky box")) {
+          quantity += product.quantity
+        }
+      })}
+    })
+    return quantity;
+  }
+
   getAllHistory();
 
   return (
@@ -29,6 +49,8 @@ const OrderHistory = () => {
                 <tr>
                   <th>ID</th>
                   <th>Ngày khởi tạo</th>
+                  <th>Tổng cộng</th>
+                  <th>Số lượng</th>
                   <th></th>
                 </tr>
               </thead>
@@ -38,10 +60,41 @@ const OrderHistory = () => {
                     <td>{items._id}</td>
                     <td>{new Date(items.createdAt).toLocaleDateString()}</td>
                     <td>
+                      {items.amount
+                        .toString()
+                        .replace(/\B(?=(\d{3})+(?!\d))/g, ".")}
+                    </td>
+                    {items.cart.map((product) => {
+                      if (product.name.toLowerCase().includes("lucky box")) {
+                        return <td key={product._id}>{product.quantity}</td>;
+                      } else {
+                        return null;
+                      }
+                    })}
+                    <td>
                       <Link to={`/history/${items._id}`}>View</Link>
                     </td>
                   </tr>
                 ))}
+              </tbody>
+            </table>
+          </div>
+          <div className="" style={{margin: "30px auto", fontSize: "20px"}}>
+            <h1 style={{textAlign: "center", color: "red"}}>Tổng tất cả đơn hàng</h1>
+            <table style={{margin: "30px auto", border: "2px solid red", borderRadius: "20px"}}>
+              <thead>
+                <tr>
+                  <th>Tổng số lượng</th>
+                  <th>Tổng cộng</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <tr>
+                  <td>{getQuantity()}</td>
+                  <td>{getTotal().toString()
+                        .replace(/\B(?=(\d{3})+(?!\d))/g, ".")}</td>
+                </tr>
               </tbody>
             </table>
           </div>
@@ -67,8 +120,11 @@ const OrderHistory = () => {
                   <tr key={items._id}>
                     <td>{items._id}</td>
                     <td>{new Date(items.createdAt).toLocaleDateString()}</td>
-                    <td>{items.amount.toString()
-                  .replace(/\B(?=(\d{3})+(?!\d))/g, ".")}</td>
+                    <td>
+                      {items.amount
+                        .toString()
+                        .replace(/\B(?=(\d{3})+(?!\d))/g, ".")}
+                    </td>
                     <td>
                       <Link to={`/history/${items._id}`}>View</Link>
                     </td>

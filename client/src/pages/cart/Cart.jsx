@@ -14,6 +14,7 @@ const Cart = () => {
   const [total, setTotal] = useState(0);
   const [token] = state.token;
   const [callback, setCallback] = state.userAPI.callback;
+  const[products] = state.productAPI.products
   const [userID] = state.userAPI.id;
   const [stripeToken, setStripeToken] = useState(null);
 
@@ -66,7 +67,7 @@ const Cart = () => {
     );
   };
 
-  const updateProduct = async (item) => {
+  const updateProduct = async (item, slot) => {
       await axios.put(
         `/api/products/${item._id}`,
         { ...item},
