@@ -1,6 +1,8 @@
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+// import Clock from "../../components/countDownClock/Clock";
+
 import { GlobalState } from "../../GlobalState";
 
 const methods = [
@@ -39,7 +41,7 @@ const Checkout = () => {
   const navigate = useNavigate();
   const [image, setImage] = useState(initialImage);
   const [listImages, setListImages] = useState([]);
-  const [slot, setSlot] = useState(0);
+  const [slot, setSlot] = useState(false);
 
   const [images, setImages] = useState([]);
   const [imagesAfterDelete, setImagesAfterDelete] = useState([]);
@@ -141,14 +143,16 @@ const Checkout = () => {
 
   const handleSlot = () => {
     cart.every(async (item, err) => {
-      if (item.slot !== null) {
-        await axios.put(
-          `/api/products/${item._id}`,
-          { ...item, slot: item.slot - item.quantity},
-          {
-            headers: { Authorization: token },
-          }
-        );
+      for (let index = 0; index < products.length; index++) {
+        if (item.slot !== null && item._id === products[index]._id) {
+          await axios.put(
+            `/api/products/${item._id}`,
+            { ...products[index], slot: products[index].slot - item.quantity},
+            {
+              headers: { Authorization: token },
+            }
+          );
+        }
       }
     });
     setCallback(!callback)
@@ -169,17 +173,7 @@ const Checkout = () => {
         alert(
           "Bạn vui lòng chọn dưới 5 sản phẩm lucky box khi thanh toán bằng hình thức COD"
         );
-      } else if (
-        products.map(item => {
-          cart.find(ele => {
-            return (ele._id === item._id && ele.slot > item.slot)
-          })
-        })
-      ) {
-        alert("Sản phẩm trong giỏ đã hết!")
-      }
-      
-      else if (axios.post("/api/payment", { ...payment, images })) {
+      } else if (axios.post("/api/payment", { ...payment, images })) {
         alert("Thanh toán thành công!");
 
         handleSlot();
@@ -213,20 +207,12 @@ const Checkout = () => {
     return total;
   };
 
-  // useEffect(() => {
-  //   const getTotal = () => {
-  //     const total = cart.reduce((prev, item) => {
-  //       return prev + item.version.price * item.quantity;
-  //     }, 0);
-  //     setTotal(total);
-  //   };
-
-  //   getTotal();
-  //   setCallback(!callback);
-  // }, [total]);
-
   return (
     <div>
+      {/* <div style={{color: "red"}} className="countdown">
+        <h1 style={{margin: "30px 100px"}}>Vui lòng hoàn thành thông tin thanh toán trong 10 phút. Nếu sau 10 phút chúng tôi không nhận được thông tin thanh toán, đơn hàng của bạn sẽ không được xác nhận.</h1>
+        <Clock />
+      </div> */}
       <div className="info">
         <table>
           <thead>

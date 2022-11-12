@@ -64,7 +64,7 @@ const UsersAPI = (token) => {
     const addCart = async (product, version) => {
         if(!isLogged) return alert("Đăng nhập để tiếp tục mua hàng")
         
-        const eventStartedDate = new Date('12 November 2022 20:30 UTC+0700');
+        const eventStartedDate = new Date('12 November 2022 20:00 UTC+0700');
         const eventEndDate = new Date('13 November 2022 00:00 UTC+0700');
 
         const currentDate = new Date()
