@@ -14,12 +14,12 @@ const OrderDetail = () => {
   const [total, setTotal] = useState(0);
   const [isEdit, setIsEdit] = useState(false);
   const [address, setAddress] = useState("");
+  const [delivered, setDelivered] = useState("");
   const [status, setStatus] = useState("");
   const [isAdmin, setIsAdmin] = state.userAPI.isAdmin;
 
   const params = useParams();
 
-  
   const getAllHistory = async () => {
     const res = await axios.get("/api/payment");
     setAllHistory(res.data);
@@ -37,6 +37,7 @@ const OrderDetail = () => {
       if (!isAdmin) {
         await axios.put(`/api/payment/${params.id}`, {
           address: address,
+          deliveredBy: delivered,
         });
       } else {
         await axios.put(`/api/payment/${params.id}`, {
@@ -72,7 +73,6 @@ const OrderDetail = () => {
     }
   }, [params.id, history]);
 
-
   useEffect(() => {
     if (orderDetail.status === "Đang xử lý") {
       setBtnEdit(true);
@@ -90,6 +90,7 @@ const OrderDetail = () => {
             <th>Địa chỉ</th>
             <th>Email</th>
             <th>Số điện thoại</th>
+            <th>Hình thức giao hàng</th>
             <th>Trạng thái</th>
             <th>Chỉnh sửa</th>
           </tr>
@@ -100,6 +101,7 @@ const OrderDetail = () => {
             <td>{orderDetail.address}</td>
             <td>{orderDetail.email}</td>
             <td>{orderDetail.phone}</td>
+            <td>{orderDetail.deliveredBy}</td>
             <td>{orderDetail.status}</td>
             {btnEdit || isAdmin ? (
               <td>
@@ -142,6 +144,19 @@ const OrderDetail = () => {
                 onChange={(e) => setAddress(e.target.value)}
               />
 
+              <br />
+
+              <label style={{ marginTop: "20px" }} htmlFor="delivered">
+                Hình thức giao hàng:{" "}
+              </label>
+              <input
+                style={{ marginTop: "20px" }}
+                type="text"
+                name="delivered"
+                value={delivered}
+                onChange={(e) => setDelivered(e.target.value)}
+              />
+
               <button type="submit">Update</button>
             </form>
           )
@@ -177,8 +192,8 @@ const OrderDetail = () => {
         </tbody>
       </table>
       <h4>
-        Tổng cộng: {orderDetail.amount.toString()
-                  .replace(/\B(?=(\d{3})+(?!\d))/g, ".")}
+        Tổng cộng:{" "}
+        {orderDetail.amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}
       </h4>
     </div>
   );

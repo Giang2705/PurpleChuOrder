@@ -12,6 +12,7 @@ const ProductsListPage = () => {
   const [callback, setCallback] = state.productAPI.callback;
 
   useEffect(() => {
+    console.log(products)
     setCallback(!callback)
   }, [])
 

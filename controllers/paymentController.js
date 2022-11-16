@@ -69,6 +69,7 @@ const paymentController = {
         phone,
         amount,
         address,
+        deliveredBy,
         cart,
         images,
         method,
@@ -85,6 +86,7 @@ const paymentController = {
         amount,
         images,
         address,
+        deliveredBy,
         cart,
         method,
       }); 
@@ -102,10 +104,10 @@ const paymentController = {
   },
   updatePayment: async (req, res) => {
     try {
-      const { address, status } = req.body;
+      const { address, status, deliveredBy } = req.body;
       await Payments.findOneAndUpdate(
         { _id: req.params.id },
-        { address, status }
+        { address, status, deliveredBy,}
       );
 
       res.json({ msg: "Updated payment" });

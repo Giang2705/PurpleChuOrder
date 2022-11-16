@@ -21,6 +21,9 @@ const paymentSchema = new mongoose.Schema({
         type: Object,
         required: true,
     },
+    deliveredBy: {
+        type: String,
+    },
     cart: {
         type: Array,
         default: [],
