@@ -51,6 +51,7 @@ const OrderHistory = () => {
                   <th>Ngày khởi tạo</th>
                   <th>Tổng cộng</th>
                   <th>Số lượng</th>
+                  <th>Phương thức thanh toán</th>
                   <th></th>
                 </tr>
               </thead>
@@ -71,6 +72,7 @@ const OrderHistory = () => {
                         return null;
                       }
                     })}
+                    <td>{items.method}</td>
                     <td>
                       <Link to={`/history/${items._id}`}>View</Link>
                     </td>

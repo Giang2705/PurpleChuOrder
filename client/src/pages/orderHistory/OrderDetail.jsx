@@ -120,6 +120,12 @@ const OrderDetail = () => {
         </tbody>
       </table>
 
+      <div className="bill">
+       {
+        orderDetail.images.length !== 0 ? <img className="billImages" src={orderDetail.images[0].url} alt="" />: null
+       }
+      </div>
+
       <div className="editArea">
         {isEdit ? (
           isAdmin ? (

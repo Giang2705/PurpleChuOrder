@@ -69,3 +69,11 @@ table a{
 .editArea button:hover {
     opacity: 0.5;
 }
+.bill {
+    margin: 30px 300px;
+}
+.bill img{
+    width: 400px;
+    height: 100%;
+    align-items: center;
+}
