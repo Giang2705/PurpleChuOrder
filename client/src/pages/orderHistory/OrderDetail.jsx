@@ -102,7 +102,7 @@ const OrderDetail = () => {
             <td>{orderDetail.email}</td>
             <td>{orderDetail.phone}</td>
             <td>{orderDetail.deliveredBy}</td>
-            <td>{orderDetail.status}</td>
+            <td><a href={orderDetail.status} target="_blank" rel="noreferrer">{orderDetail.status}</a></td>
             {btnEdit || isAdmin ? (
               <td>
                 <button className="btnEdit" onClick={onClick}>
