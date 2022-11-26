@@ -65,7 +65,7 @@ const UsersAPI = (token) => {
         if(!isLogged) return alert("Đăng nhập để tiếp tục mua hàng")
         
         const eventStartedDate = new Date('26 November 2022 20:00 UTC+0700');
-        const eventEndDate = new Date('27 November 2022 00:00 UTC+0700');
+        // const eventEndDate = new Date('27 November 2022 00:00 UTC+0700');
 
         const currentDate = new Date()
 
@@ -79,8 +79,8 @@ const UsersAPI = (token) => {
         if (product.name.toLowerCase().includes("oreo")) {
             if (currentDate.getTime() < eventStartedDate.getTime()) return alert("Hiện tại sản phẩm chưa tới giờ mở bán. Vui lòng quay lại vào " + eventStartedDate)
 
-            else if (currentDate.getTime() > eventEndDate.getTime())
-            return alert("Đã hết giờ nhận mở bán. Hẹn bạn vào đợt sau nha. Cám ơn bạn đã quan tâm!")
+            // else if (currentDate.getTime() > eventEndDate.getTime())
+            // return alert("Đã hết giờ nhận mở bán. Hẹn bạn vào đợt sau nha. Cám ơn bạn đã quan tâm!")
         }
 
         if(product.slot <= 0 && product.slot !== null) {

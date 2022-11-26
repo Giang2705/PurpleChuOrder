@@ -42,6 +42,7 @@ const OrderDetail = () => {
       } else {
         await axios.put(`/api/payment/${params.id}`, {
           status: status,
+          email: orderDetail.email,
         });
       }
 

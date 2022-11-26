@@ -104,7 +104,12 @@ const paymentController = {
   },
   updatePayment: async (req, res) => {
     try {
-      const { address, status, deliveredBy } = req.body;
+      const { address, status, deliveredBy, email } = req.body;
+      
+      if (status.toLowerCase().includes('đơn hàng bị hủy')){
+        sendmailControllers.sendmailCancel(email)
+      }
+
       await Payments.findOneAndUpdate(
         { _id: req.params.id },
         { address, status, deliveredBy,}
