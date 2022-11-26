@@ -186,7 +186,7 @@ const Checkout = () => {
       } else if (
         cart.every((item) => {
           if (item.name.toLowerCase().includes("oreo")) {
-            return (payment.method === "chuyển khoản ngân hàng" || payment.method === "momo")
+            return (payment.method === "cod")
           }
         })
       ) {
