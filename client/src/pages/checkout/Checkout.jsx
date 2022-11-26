@@ -185,7 +185,7 @@ const Checkout = () => {
         );
       } else if (
         cart.every((item) => {
-          if (item.name.toLowerCase().includes("test")) {
+          if (item.name.toLowerCase().includes("oreo")) {
             return (payment.deliveredBy === "chuyển khoản ngân hàng" || payment.deliveredBy === "momo")
           }
         })
