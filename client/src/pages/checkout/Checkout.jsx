@@ -287,9 +287,8 @@ const Checkout = () => {
           <p style={{ margin: "20px 30px" }}>
             CÁC BẠN VUI LÒNG THANH TOÁN THEO CÁC HÌNH THỨC DƯỚI ĐÂY VÀ CHỤP ẢNH
             MÀN HÌNH, SAU ĐÓ UPLOAD BILL ĐỂ SHOP XÁC NHẬN <br />
-            - Hàng ord er/deal: 0307199968688 MB bank Nguyen Thao Nguyen <br />
-            - Hàng sẵn: 0039100006330004 OCB bank Nguyen Thao Nguyen <br />-
-            0942450307 nguyen thao nguyen momo
+            - Chuyển khoản ngân hàng: 0039100006330004 OCB bank Nguyen Thao Nguyen <br />
+            - Momo: 0942450307 nguyen thao nguyen 
           </p>
         </div>
       </div>
