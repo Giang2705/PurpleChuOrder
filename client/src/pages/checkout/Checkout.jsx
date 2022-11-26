@@ -17,6 +17,15 @@ const methods = [
   },
 ];
 
+const delivery = [
+  {
+    title: "Giao dịch trực tiếp",
+  },
+  {
+    title: "Ship",
+  }
+];
+
 const initialState = {
   user_id: "",
   name: "",
@@ -26,6 +35,7 @@ const initialState = {
   address: "",
   cart: [],
   method: "",
+  deliveredBy: "",
 };
 
 const initialImage = {
@@ -173,7 +183,19 @@ const Checkout = () => {
         alert(
           "Bạn vui lòng chọn dưới 5 sản phẩm lucky box khi thanh toán bằng hình thức COD"
         );
-      } else if (axios.post("/api/payment", { ...payment, images })) {
+      } else if (
+        cart.every((item) => {
+          if (item.name.toLowerCase().includes("test")) {
+            return (payment.deliveredBy === "chuyển khoản ngân hàng" || payment.deliveredBy === "momo")
+          }
+        })
+      ) {
+        alert(
+          "Sản phẩm chỉ nhận thanh toán bằng hình thức thanh toán chuyển khoản. Vui lòng chuyển khoản để tiếp tục mua hàng!"
+        )
+      }
+      
+      else if (axios.post("/api/payment", { ...payment, images })) {
         alert("Thanh toán thành công!");
 
         handleSlot();
@@ -356,6 +378,29 @@ const Checkout = () => {
                       value={method.title}
                       checked={payment.method === method.title}
                       name="method"
+                      type="radio"
+                      onChange={handleChangeInput}
+                      required
+                    />
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          <div className="row">
+            <legend>Hình thức giao dịch: </legend>
+
+            <div className="radio-buttons">
+              {delivery.map((delivery) => {
+                return (
+                  <div className="row" key={delivery.title}>
+                    <label htmlFor="">{delivery.title}</label>
+                    <input
+                      id={delivery.title}
+                      value={delivery.title}
+                      checked={payment.deliveredBy === delivery.title}
+                      name="deliveredBy"
                       type="radio"
                       onChange={handleChangeInput}
                       required
