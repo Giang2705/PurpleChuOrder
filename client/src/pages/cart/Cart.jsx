@@ -80,8 +80,11 @@ const Cart = () => {
   const increment = (id, version) => {
     cart.forEach((item) => {
       if (item._id === id && item.version.ver === version && (item.slot > item.quantity || item.slot === null) ) {
+        if (item.name.toLowerCase().includes("oreo") && item.slot < 5) {
+          alert("Đơn hàng sẽ chuyển sang pick up slot!")
+        }
         item.quantity += 1;
-      } else if (item._id === id && item.version.ver === version) {
+      }else if (item._id === id && item.version.ver === version) {
         alert("Sản phẩm chỉ còn " + item.slot + " slot!")
       }
     });
